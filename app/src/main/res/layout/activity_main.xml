@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.155" />
     <ImageButton
-        android:id="@+id/imageButton8"
+        android:id="@+id/cameraButton"
         android:layout_width="72dp"
         android:layout_height="70dp"
         android:adjustViewBounds="true"
@@ -28,7 +28,7 @@
         tools:layout_editor_absoluteX="169dp"
         tools:layout_editor_absoluteY="289dp" />
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/cameraText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=" 사진으로 검색 "
@@ -45,7 +45,7 @@
         tools:layout_editor_absoluteY="173dp" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/loginText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=" 로그인 "
@@ -54,7 +54,7 @@
         tools:layout_editor_absoluteY="535dp" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/loginButton"
         android:layout_width="72dp"
         android:layout_height="72dp"
         android:adjustViewBounds="true"
