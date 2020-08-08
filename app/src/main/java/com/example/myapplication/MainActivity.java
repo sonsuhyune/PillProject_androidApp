@@ -11,7 +11,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends Activity {
 
@@ -28,7 +28,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.myAppName);
-        setActionBar(toolbar);
+        setContentView(toolbar);
         setup();
         cameraButton.setOnClickListener(new View.OnClickListener()
         {
