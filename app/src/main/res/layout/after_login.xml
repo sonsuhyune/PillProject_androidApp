@@ -90,6 +90,16 @@
         tools:ignore="MissingConstraints,MissingC록onstraints"
         tools:layout_editor_absoluteX="174dp"
         tools:layout_editor_absoluteY="670dp" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="412dp"
+        android:layout_height="61dp"
+        android:background="#E9EAEC"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

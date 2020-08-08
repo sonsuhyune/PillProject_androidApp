@@ -17,7 +17,7 @@ public class MainActivity extends Activity {
 
 
 
-    ImageButton imageButton8 = null;
+    ImageButton cameraButton = null;
     ImageView iv = null;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
         toolbar.setTitle(R.string.myAppName);
         setActionBar(toolbar);
         setup();
-        imageButton8.setOnClickListener(new View.OnClickListener()
+        cameraButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -43,7 +43,7 @@ public class MainActivity extends Activity {
 
     private void setup()
     {
-        imageButton8 = (ImageButton)findViewById(R.id.imageButton8);
+        cameraButton = (ImageButton)findViewById(R.id.cameraButton);
         iv = (ImageView)findViewById(R.id.iv);
     }
 
