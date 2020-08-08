@@ -1,6 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+
+    <ImageButton
+        android:id="@+id/saveButton"
+        android:layout_width="72dp"
+        android:layout_height="70dp"
+        android:adjustViewBounds="true"
+        android:background="#FFFDFD"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/save"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="169dp"
+        tools:layout_editor_absoluteY="588dp" />
+
+    <ImageButton
+        android:id="@+id/mypillButton"
+        android:layout_width="72dp"
+        android:layout_height="70dp"
+        android:adjustViewBounds="true"
+        android:background="#FFFDFD"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/mypill"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="169dp"
+        tools:layout_editor_absoluteY="443dp" />
+
+    <TextView
+        android:id="@+id/searchText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" 이름으로 검색 "
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="220dp" />
+
+    <ImageButton
+        android:id="@+id/searchButton"
+        android:layout_width="72dp"
+        android:layout_height="70dp"
+        android:adjustViewBounds="true"
+        android:background="#FFFDFD"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/search"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="169dp"
+        tools:layout_editor_absoluteY="138dp" />
+
+    <TextView
+        android:id="@+id/mypillText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" 복용중인 알약 "
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="525dp" />
+
+    <ImageButton
+        android:id="@+id/cameraButton"
+        android:layout_width="72dp"
+        android:layout_height="70dp"
+        android:adjustViewBounds="true"
+        android:background="#FFFDFD"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/camera2"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="169dp"
+        tools:layout_editor_absoluteY="289dp" />
+
+    <TextView
+        android:id="@+id/cameraText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" 사진으로 검색 "
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="371dp" />
+
+    <TextView
+        android:id="@+id/saveText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" 알약 등록 "
+        tools:ignore="MissingConstraints,MissingC록onstraints"
+        tools:layout_editor_absoluteX="174dp"
+        tools:layout_editor_absoluteY="670dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
