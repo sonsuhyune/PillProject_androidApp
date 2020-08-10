@@ -22,7 +22,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    public void camera_click(View v) {
 
+        Toast.makeText(getApplicationContext(),"사진으로 검이 눌렸습니다.", Toast.LENGTH_SHORT).show();
+    }
+    public void login_click(View v) {
+
+        Toast.makeText(getApplicationContext(),"로그인하기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
+    }
 
 
 }
