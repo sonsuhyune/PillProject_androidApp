@@ -1,41 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-
-    <Button
-        android:id="@+id/button_login"
-        android:layout_width="288dp"
-        android:layout_height="45dp"
-        android:onClick="temp_login_button"
-        android:text=" 로그인 "
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.54"
-        app:srcCompat="@drawable/save"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <Button
         android:id="@+id/button_signup"
         android:layout_width="288dp"
         android:layout_height="45dp"
-        android:onClick="signup_button"
+        android:onClick="temp_signup_button"
         android:text=" 회원가입 "
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.623"
+        app:layout_constraintVertical_bias="0.734"
         app:srcCompat="@drawable/save"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
@@ -43,7 +24,7 @@
         tools:layout_constraintTop_creator="1" />
 
     <EditText
-        android:id="@+id/PW_text"
+        android:id="@+id/signup_PW_text"
         android:layout_width="290dp"
         android:layout_height="49dp"
 
@@ -61,7 +42,7 @@
         tools:layout_constraintTop_creator="1" />
 
     <EditText
-        android:id="@+id/ID_text"
+        android:id="@+id/signup_ID_text"
         android:layout_width="289dp"
         android:layout_height="44dp"
 
@@ -72,6 +53,42 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.339"
+        app:srcCompat="@drawable/save"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <EditText
+        android:id="@+id/signup_name"
+        android:layout_width="290dp"
+        android:layout_height="49dp"
+
+        android:hint=" 이름을 입력하세요 "
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.538"
+        app:srcCompat="@drawable/save"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <EditText
+        android:id="@+id/signup_email"
+        android:layout_width="290dp"
+        android:layout_height="49dp"
+
+        android:hint=" 이메을 입력하세요 "
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.642"
         app:srcCompat="@drawable/save"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
@@ -95,5 +112,4 @@
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
