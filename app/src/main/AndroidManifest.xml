@@ -19,6 +19,7 @@
         <activity android:name=".after_login"/>
         <activity android:name=".add_pill"/>
         <activity android:name=".add_pill_user"/>
+        <activity android:name=".login"/>
 
 
     </application>

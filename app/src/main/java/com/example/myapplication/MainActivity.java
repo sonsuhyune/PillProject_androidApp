@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),"사진으로 검이 눌렸습니다.", Toast.LENGTH_SHORT).show();
     }
     public void login_click(View v) {
-        Intent intent = new Intent(getApplicationContext(), after_login.class);
+        Intent intent = new Intent(getApplicationContext(), login.class);
         startActivity(intent);
         Toast.makeText(getApplicationContext(),"로그인하기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
     }
