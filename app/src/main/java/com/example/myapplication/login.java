@@ -19,11 +19,20 @@ public class login  extends AppCompatActivity {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //toolbar.setTitle(R.string.myAppName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.abc_vector_test);
+        getSupportActionBar(); //.setDisplayHomeAsUpEnabled(true);
 
     }
-    //back button 동작 구현해야함.
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+                finish();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     public void temp_login_button(View v) {
         Intent intent = new Intent(getApplicationContext(), after_login.class);
