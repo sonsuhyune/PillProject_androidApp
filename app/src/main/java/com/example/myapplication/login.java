@@ -16,21 +16,11 @@ public class login  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
         //toolbar.setTitle(R.string.myAppName);
-        getSupportActionBar(); //.setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar(); //.setDisplayHomeAsUpEnabled(true);
 
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
-                finish();
-                return true;
-            }
-        }
-        return super.onOptionsItemSelected(item);
     }
 
 
@@ -50,5 +40,13 @@ public class login  extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Toast.makeText(getApplicationContext(),"회원가입 하기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
+    }
+    public void login_back(View v) {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.transition.anim_slide_a, R.transition.anim_slide_b);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Toast.makeText(getApplicationContext()," 뒤로가기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
     }
 }
