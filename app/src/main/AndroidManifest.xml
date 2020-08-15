@@ -21,6 +21,8 @@
         <activity android:name=".add_pill_user"/>
         <activity android:name=".login"/>
         <activity android:name=".signup"/>
+        <activity android:name=".name_search"/>
+        <activity android:name=".show_pill"/>
 
 
     </application>
