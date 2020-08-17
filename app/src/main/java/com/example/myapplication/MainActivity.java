@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageView imageView;
     ImageButton cameraBtn;
     final static int TAKE_PICTURE = 1;
-
+    static int check_flag = 1;
     String mCurrentPhotoPath;
     static final int REQUEST_TAKE_PHOTO = 1;
 
@@ -100,8 +100,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.cameraButton:
                 // 카메라 앱을 여는 소스
                 dispatchTakePictureIntent();
+
                 break;
+
         }
+
+
+
     }
 
     // 카메라로 촬영한 영상을 가져오는 부분
@@ -165,8 +170,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                //Intent intent = new Intent(getApplicationContext(), login.class);
+                //startActivity(intent);
             }
         }
+        check_flag++;
     }
 
     public void camera_click(View v) {
