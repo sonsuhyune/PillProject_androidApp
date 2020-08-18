@@ -76,7 +76,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+    public void search_button(View v) {
+        Intent intent = new Intent(getApplicationContext(), search_result.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        overridePendingTransition(R.transition.anim_slide_in_left, R.transition.anim_slide_out_right);
 
+        Toast.makeText(getApplicationContext(),"로그인하기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
+    }
+    public void back_button(View v) {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.transition.anim_slide_a, R.transition.anim_slide_b);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Toast.makeText(getApplicationContext()," main 가 눌렸습니다.", Toast.LENGTH_SHORT).show();
+    }
     // 권한 요청
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -117,8 +133,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) { //camera 화면 후
         super.onActivityResult(requestCode, resultCode, intent);
-        if (requestCode == REQUEST_TAKE_PHOTO ){
-            try{
+        if (requestCode == REQUEST_TAKE_PHOTO) {
+            try {
                 File file = new File(mCurrentPhotoPath);
                 InputStream in = getContentResolver().openInputStream(Uri.fromFile(file));
                 img = BitmapFactory.decodeStream(in);
@@ -132,12 +148,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 in.close();
 
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-
+    }
 
     /*
         try {
@@ -160,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         */
 
-    }
+
 
 
     // 카메라로 촬영한 이미지를 파일로 저장해주는 함수
