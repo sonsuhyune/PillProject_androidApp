@@ -52,36 +52,13 @@
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1">
+        tools:layout_constraintTop_creator="1"
+        android:fillViewport="true">
 
-        <LinearLayout
+        <ListView
+            android:id="@+id/listview1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="118dp"
-                android:layout_height="101dp"
-                android:background="#E9EAEA"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.136"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.228"
-                app:srcCompat="@android:drawable/ic_menu_camera"
-
-                tools:layout_constraintBottom_creator="1"
-                tools:layout_constraintLeft_creator="1"
-                tools:layout_constraintRight_creator="1"
-                tools:layout_constraintTop_creator="1" />
-
-
-        </LinearLayout>
-
-
+            android:layout_height="match_parent" />
 
     </ScrollView>
 
