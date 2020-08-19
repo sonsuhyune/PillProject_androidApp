@@ -29,6 +29,11 @@
         <activity android:name=".signup"/>
         <activity android:name=".name_search"/>
         <activity android:name=".show_pill"/>
+        <activity android:name=".after_camera"/>
+        <activity android:name=".search_result"/>
+        <activity android:name=".add_pill_after_camera"/>
+        <activity android:name=".result_in_add_pill"/>
+        <activity android:name=".search_result_after_login"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

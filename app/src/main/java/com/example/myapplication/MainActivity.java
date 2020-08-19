@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import androidx.core.content.FileProvider;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -37,10 +39,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageView imageView;
     ImageButton cameraBtn;
     final static int TAKE_PICTURE = 1;
-
+    static int check_flag = 1;
     String mCurrentPhotoPath;
     static final int REQUEST_TAKE_PHOTO = 1;
-
+    private Bitmap img; ///
+    ImageView photoImageView;
+    private String mImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 레이아웃과 변수 연결
         imageView = findViewById(R.id.iv);
         cameraBtn = findViewById(R.id.cameraButton);
-
+        //photoImageView = findViewById(R.id.imageView3);
         // 카메라 버튼에 리스터 추가
         cameraBtn.setOnClickListener(this);
 
@@ -72,7 +76,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+    public void search_button(View v) {
+        Intent intent = new Intent(getApplicationContext(), search_result.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        overridePendingTransition(R.transition.anim_slide_in_left, R.transition.anim_slide_out_right);
 
+        Toast.makeText(getApplicationContext(),"로그인하기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
+    }
+    public void back_button(View v) {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.transition.anim_slide_a, R.transition.anim_slide_b);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Toast.makeText(getApplicationContext()," main 가 눌렸습니다.", Toast.LENGTH_SHORT).show();
+    }
     // 권한 요청
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -100,15 +120,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.cameraButton:
                 // 카메라 앱을 여는 소스
                 dispatchTakePictureIntent();
+
                 break;
+
         }
+
+
+
     }
 
     // 카메라로 촬영한 영상을 가져오는 부분
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) { //camera 화면 후
         super.onActivityResult(requestCode, resultCode, intent);
+        if (requestCode == REQUEST_TAKE_PHOTO) {
+            try {
+                File file = new File(mCurrentPhotoPath);
+                InputStream in = getContentResolver().openInputStream(Uri.fromFile(file));
+                img = BitmapFactory.decodeStream(in);
+                setContentView(R.layout.after_camera);////////////
+                photoImageView = findViewById(R.id.imageView); /////
 
+
+                photoImageView.setImageBitmap(img);
+
+
+                in.close();
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    /*
         try {
             switch (requestCode) {
                 case REQUEST_TAKE_PHOTO: {
@@ -127,7 +174,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } catch (Exception error) {
             error.printStackTrace();
         }
-    }
+        */
+
+
+
 
     // 카메라로 촬영한 이미지를 파일로 저장해주는 함수
     private File createImageFile() throws IOException {
@@ -165,8 +215,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                //Intent intent = new Intent(getApplicationContext(), login.class);
+                //startActivity(intent);
             }
         }
+        check_flag++;
     }
 
     public void camera_click(View v) {
