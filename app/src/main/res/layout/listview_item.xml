@@ -53,7 +53,7 @@
                     android:id="@+id/button"
                     android:layout_width="153dp"
                     android:layout_height="43dp"
-                    android:onClick="search_button"
+                    android:onClick="more_button"
                     android:text=" 자세히보기 "
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"

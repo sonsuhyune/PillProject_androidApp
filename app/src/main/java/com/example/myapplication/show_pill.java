@@ -64,5 +64,14 @@ public class show_pill extends AppCompatActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 Toast.makeText(getApplicationContext(), " 뒤로가기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
             }
+    public void more_button(View v) {
+        Intent intent = new Intent(getApplicationContext(), saved_pill.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        overridePendingTransition(R.transition.anim_slide_in_left, R.transition.anim_slide_out_right);
+
+        Toast.makeText(getApplicationContext()," 자세히 보기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
+    }
 
         }
