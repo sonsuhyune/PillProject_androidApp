@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -101,30 +103,64 @@ public class after_login extends AppCompatActivity implements View.OnClickListen
         }
     }
 
+    public static Bitmap rotateImage(Bitmap source, float angle) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
+                matrix, true);
+    }
+
     // 카메라로 촬영한 영상을 가져오는 부분
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) { //camera 화면 후
         super.onActivityResult(requestCode, resultCode, intent);
-        if (requestCode == REQUEST_TAKE_PHOTO) {
-            try {
-                File file = new File(mCurrentPhotoPath);
-                InputStream in = getContentResolver().openInputStream(Uri.fromFile(file));
-                img = BitmapFactory.decodeStream(in);
-                setContentView(R.layout.after_camera);////////////
-                photoImageView = findViewById(R.id.imageView); /////
+        try {
+            switch (requestCode) {
+                case REQUEST_TAKE_PHOTO: {
+                    if (resultCode == RESULT_OK) {
+                        File file = new File(mCurrentPhotoPath);
+                        InputStream in = getContentResolver().openInputStream(Uri.fromFile(file));
+                        img = BitmapFactory.decodeStream(in);
+                        setContentView(R.layout.after_camera);////////////
+                        photoImageView = findViewById(R.id.imageView); /////
 
+                        if (img != null) {
+                            ExifInterface ei = new ExifInterface(mCurrentPhotoPath);
+                            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                                    ExifInterface.ORIENTATION_UNDEFINED);
 
-                photoImageView.setImageBitmap(img);
+                            Bitmap rotatedBitmap = null;
+                            switch (orientation) {
 
+                                case ExifInterface.ORIENTATION_ROTATE_90:
+                                    rotatedBitmap = rotateImage(img, 90);
+                                    break;
 
-                in.close();
+                                case ExifInterface.ORIENTATION_ROTATE_180:
+                                    rotatedBitmap = rotateImage(img, 180);
+                                    break;
 
+                                case ExifInterface.ORIENTATION_ROTATE_270:
+                                    rotatedBitmap = rotateImage(img, 270);
+                                    break;
 
-            } catch (Exception e) {
-                e.printStackTrace();
+                                case ExifInterface.ORIENTATION_NORMAL:
+                                default:
+                                    rotatedBitmap = img;
+                            }
+
+                            photoImageView.setImageBitmap(rotatedBitmap);
+
+                            in.close();
+                        }
+                    }
+                    break;
+                }
             }
-        }
 
+        } catch (Exception error) {
+            error.printStackTrace();
+        }
     }
 
     // 카메라로 촬영한 이미지를 파일로 저장해주는 함수
