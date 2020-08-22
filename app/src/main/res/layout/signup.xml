@@ -20,18 +20,19 @@
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1" />
+
     <Button
         android:id="@+id/button_signup"
         android:layout_width="288dp"
         android:layout_height="45dp"
-        android:onClick="temp_signup_button"
+        android:onClick="signup_button"
         android:text=" 회원가입 "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.734"
+        app:layout_constraintVertical_bias="0.661"
         app:srcCompat="@drawable/save"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
@@ -43,7 +44,7 @@
         android:layout_width="290dp"
         android:layout_height="49dp"
 
-        android:hint="Password를 입력하세요 "
+        android:hint="비밀번호"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -61,7 +62,7 @@
         android:layout_width="289dp"
         android:layout_height="44dp"
 
-        android:hint="ID를 입력하세요 "
+        android:hint="아이디"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -75,35 +76,17 @@
         tools:layout_constraintTop_creator="1" />
 
     <EditText
-        android:id="@+id/signup_name"
+        android:id="@+id/signup_chkPW_text"
         android:layout_width="290dp"
         android:layout_height="49dp"
 
-        android:hint=" 이름을 입력하세요 "
+        android:hint="비밀번호 재확인"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.538"
-        app:srcCompat="@drawable/save"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
-
-    <EditText
-        android:id="@+id/signup_email"
-        android:layout_width="290dp"
-        android:layout_height="49dp"
-
-        android:hint=" 이메을 입력하세요 "
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.512"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.642"
         app:srcCompat="@drawable/save"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
