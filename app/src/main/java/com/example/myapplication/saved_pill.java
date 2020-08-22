@@ -21,7 +21,7 @@ public class saved_pill extends AppCompatActivity {
     }
 
     public void back_button(View v) {
-        Intent intent = new Intent(getApplicationContext(), after_login.class);
+        Intent intent = new Intent(getApplicationContext(), show_pill.class);
         startActivity(intent);
         overridePendingTransition(R.transition.anim_slide_a, R.transition.anim_slide_b);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
