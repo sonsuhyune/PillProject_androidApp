@@ -10,7 +10,7 @@
         android:id="@+id/button_login"
         android:layout_width="288dp"
         android:layout_height="45dp"
-        android:onClick="temp_login_button"
+        android:onClick="login_button"
         android:text=" 로그인 "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
