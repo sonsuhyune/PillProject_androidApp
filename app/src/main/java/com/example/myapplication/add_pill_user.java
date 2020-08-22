@@ -38,9 +38,10 @@ public class add_pill_user extends AppCompatActivity {
     private String mCurrentPhotoPath;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mImageView = findViewById(R.id.imageView);
+        //mImageView = findViewById(R.id.imageView);
         setContentView(R.layout.add_pill_user);
         button = findViewById(R.id.button); ////
+        mImageView = findViewById(R.id.imageView);
         button.setOnClickListener(new View.OnClickListener(){
             @Override //이미지 불러오기기
             public void onClick(View v) {
