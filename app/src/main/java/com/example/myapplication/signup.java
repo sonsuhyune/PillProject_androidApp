@@ -122,8 +122,8 @@ public class signup extends AppCompatActivity {
             if (data.equals("0")) {
                 Log.e("RESULT", "성공적으로 처리되었습니다!");
                 alertBuilder
-                        .setTitle("회원가입")
-                        .setMessage("성공적으로 등록되었습니다!")
+                        //.setTitle("회원가입")
+                        .setMessage("회원가입이 완료되었습니")
                         .setCancelable(true)
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             @Override
@@ -137,13 +137,13 @@ public class signup extends AppCompatActivity {
             else {
                 Log.e("RESULT", "에러 발생! ERRCODE = " + data);
                 alertBuilder
-                        .setTitle("회원가입")
-                        .setMessage("등록중 에러가 발생했습니다! errcode : " + data)
+                        //.setTitle("회원가입")
+                        .setMessage("사용할 수 없는 아이디입니다")
                         .setCancelable(true)
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                finish();
+                                //finish();
                             }
                         });
                 AlertDialog dialog = alertBuilder.create();
