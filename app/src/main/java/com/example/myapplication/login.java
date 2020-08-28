@@ -98,6 +98,7 @@ public class login  extends AppCompatActivity {
 
                 if(!data.equals("0"))
                 {
+                    // 정상 작동
                     Log.e("RESULT","성공적으로 처리되었습니다!");
                 }
                 else
@@ -123,8 +124,8 @@ public class login  extends AppCompatActivity {
             {
                 Log.e("RESULT","성공적으로 처리되었습니다!");
                 alertBuilder
-                        .setTitle("알림")
-                        .setMessage("성공적으로 등록되었습니다!")
+                        //.setTitle("알림")
+                        .setMessage(sId+"님 환영합니다!")
                         .setCancelable(true)
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             @Override
@@ -137,12 +138,13 @@ public class login  extends AppCompatActivity {
                 AlertDialog dialog = alertBuilder.create();
                 dialog.show();
             }
-            else if(data.equals("0"))
+            else if(data.equals("0")||data.equals("Can not find ID"))
             {
-                Log.e("RESULT","비밀번호가 일치하지 않습니다.");
+                if (data.equals("0")) Log.e("RESULT", "비밀번호가 일치하지 않습니다.");
+                else Log.e("RESULT", "등록되지 않은 아이디입니다.");
                 alertBuilder
-                        .setTitle("알림")
-                        .setMessage("비밀번호가 일치하지 않습니다.")
+                        //.setTitle("알림")
+                        .setMessage("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.")
                         .setCancelable(true)
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             @Override
@@ -157,7 +159,7 @@ public class login  extends AppCompatActivity {
             {
                 Log.e("RESULT","에러 발생! ERRCODE = " + data);
                 alertBuilder
-                        .setTitle("알림")
+                        //.setTitle("알림")
                         .setMessage("등록중 에러가 발생했습니다! errcode : "+ data)
                         .setCancelable(true)
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
