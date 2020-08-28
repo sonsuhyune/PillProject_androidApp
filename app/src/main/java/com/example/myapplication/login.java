@@ -100,6 +100,11 @@ public class login  extends AppCompatActivity {
                 {
                     // 정상 작동
                     Log.e("RESULT","성공적으로 처리되었습니다!");
+                    //Intent intent = new Intent(getApplicationContext(), after_login.class);
+                    //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    //startActivity(intent);
+                    //overridePendingTransition(R.transition.anim_slide_in_left, R.transition.anim_slide_out_right);
                 }
                 else
                 {
@@ -130,8 +135,9 @@ public class login  extends AppCompatActivity {
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), after_login.class);
                                 startActivity(intent);
+                                overridePendingTransition(R.transition.anim_slide_in_left, R.transition.anim_slide_out_right);
                                 finish();
                             }
                         });
