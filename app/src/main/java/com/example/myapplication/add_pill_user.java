@@ -49,6 +49,7 @@ public class add_pill_user extends AppCompatActivity {
             }
         });
     }
+
     @Override //갤러리에서 이미지 불러온 후 행동
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
