@@ -2,21 +2,30 @@ package com.example.myapplication;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
@@ -25,8 +34,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
-public class add_pill_user extends AppCompatActivity {
 
+
+public class add_pill_user extends AppCompatActivity {
+    final Context context = this;
+    search_result sr = new search_result(); //company이름을 받아오기 위한
+    login login_ = new login();  // user id를 받아오기 위한
+    String img_path = "temp.jpg";
+    String company;
+    String user_id;
+    String pill_name;
     private Button button;
     static final String TAG = "ProfileActivityTAG";
     //RequestCode
@@ -36,9 +53,15 @@ public class add_pill_user extends AppCompatActivity {
     final static int PICK_IMAGE = 1; //갤러리에서 사진선택
     final static int CAPTURE_IMAGE = 2;  //카메라로찍은 사진선택
     private String mCurrentPhotoPath;
+    EditText et_nickname;
+    String nickname;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //mImageView = findViewById(R.id.imageView);
+        et_nickname = (EditText) findViewById(R.id.nick);
+
+
         setContentView(R.layout.add_pill_user);
         button = findViewById(R.id.button); ////
         mImageView = findViewById(R.id.imageView);
@@ -154,6 +177,84 @@ public class add_pill_user extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Toast.makeText(getApplicationContext()," 뒤로가기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
     }
+    //<여기부터 mysql 연동>
+    public void save(View v){
+        //nickname=et_nickname.getText().toString().trim();
+        nickname = "test";
+        company = sr.pill_company;
+        pill_name = sr.pill_name;
+        user_id = login_.sId;
+        img_path = "temp.jpg";
+        save_DB save_in = new save_DB();
+        save_in.execute();
 
+
+    }
+    /* DB에 저장 */
+    public class save_DB extends AsyncTask<Void, Integer, Void> {
+
+        String data = "";
+
+        @Override
+        protected Void doInBackground(Void... unused) {
+
+            /* 인풋 파라메터값 생성 */
+            String param = "u_id=" + user_id + "&u_nick=" + nickname + "&pill_name=" + pill_name + "&img_path=" + img_path+"";
+            try {
+                /* 서버연결 */
+                URL url = new URL(
+                        "http://203.255.176.79:8000/add_pillinfo.php");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestMethod("POST");
+                conn.setDoInput(true);
+                conn.connect();
+
+                /* 안드로이드 -> 서버 파라메터값 전달 */
+                OutputStream outs = conn.getOutputStream();
+                outs.write(param.getBytes("UTF-8"));
+                outs.flush();
+                outs.close();
+
+                /* 서버 -> 안드로이드 파라메터값 전달 */
+                InputStream is = null;
+                BufferedReader in = null;
+
+                is = conn.getInputStream();
+                in = new BufferedReader(new InputStreamReader(is), 8 * 1024);
+                String line = null;
+                StringBuffer buff = new StringBuffer();
+                while ((line = in.readLine()) != null) {
+                    buff.append(line + "\n");
+                }
+                data = buff.toString().trim();
+                Log.e("RECV DATA", data);
+                androidx.appcompat.app.AlertDialog.Builder alertBuilder = new androidx.appcompat.app.AlertDialog.Builder(context);
+                if (data == "0"){
+                    alertBuilder
+
+                            .setMessage("저장완료!")
+                            .setCancelable(true)
+                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                }
+                            });
+                    androidx.appcompat.app.AlertDialog dialog = alertBuilder.create();
+                    dialog.show();
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+
+
+    }
 
 }
