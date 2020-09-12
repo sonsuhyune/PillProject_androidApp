@@ -17,25 +17,41 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    /* 이미지 socket 통신 부분 */
+    private Handler mHandler;
+    private Socket socket;
+    private DataOutputStream dos;
+    private DataInputStream dis;
+    private String ip = "203.255.176.79";
+    private int port = 8088;
 
     final String TAG = getClass().getSimpleName();
     ImageView imageView;
@@ -44,9 +60,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     static int check_flag = 1;
     String mCurrentPhotoPath;
     static final int REQUEST_TAKE_PHOTO = 1;
-    private Bitmap img; ///
+    private Bitmap img;
+    private Bitmap rotatedBitmap = null;
     ImageView photoImageView;
     private String mImage;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,14 +97,61 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+
+    void connect(){
+        mHandler = new Handler();
+        Log.w("connect","연결 하는중");
+        Thread checkUpdate = new Thread() {
+            private int i = 0;
+            public void run() {
+                ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
+                rotatedBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArray);
+                byte[] bytes = byteArray.toByteArray();
+
+                // 서버 접속
+                try {
+                    socket = new Socket(ip, port);
+                    Log.w("서버 접속됨", "서버 접속됨");
+                } catch (IOException e1) {
+                    Log.w("서버접속못함", "서버접속못함");
+                    e1.printStackTrace();
+                }
+
+                Log.w("edit 넘어가야 할 값 : ","안드로이드에서 서버로 연결요청");
+
+                try {
+                    Log.w("Image Length:", Integer.toString(bytes.length));
+                    dos = new DataOutputStream(socket.getOutputStream());
+                    dis = new DataInputStream(socket.getInputStream());
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.w("버퍼", "버퍼생성 잘못됨");
+                }
+                Log.w("버퍼","버퍼생성 잘됨");
+
+                try{
+                    dos.writeUTF(Integer.toString(bytes.length));
+                    dos.flush();
+
+                    dos.write(bytes);
+                    dos.flush();
+                }
+                catch (Exception e){
+                    Log.w("error", "error occur");
+                }
+            }
+        };
+        checkUpdate.start();
+    }
+
     public void search_button(View v) {
+        connect();
         Intent intent = new Intent(getApplicationContext(), search_result.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         overridePendingTransition(R.transition.anim_slide_in_left, R.transition.anim_slide_out_right);
-
-        Toast.makeText(getApplicationContext(),"로그인하기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
     }
     public void back_button(View v) {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -155,7 +221,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
                                     ExifInterface.ORIENTATION_UNDEFINED);
 
-                            Bitmap rotatedBitmap = null;
                             switch (orientation) {
 
                                 case ExifInterface.ORIENTATION_ROTATE_90:
@@ -188,31 +253,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             error.printStackTrace();
         }
     }
-
-
-    /*
-        try {
-            switch (requestCode) {
-                case REQUEST_TAKE_PHOTO: {
-                    if (resultCode == RESULT_OK) {
-                        File file = new File(mCurrentPhotoPath);
-                        Bitmap bitmap = MediaStore.Images.Media
-                                .getBitmap(getContentResolver(), Uri.fromFile(file));
-                        if (bitmap != null) {
-                            imageView.setImageBitmap(bitmap);
-                        }
-                    }
-                    break;
-                }
-            }
-
-        } catch (Exception error) {
-            error.printStackTrace();
-        }
-        */
-
-
-
 
     // 카메라로 촬영한 이미지를 파일로 저장해주는 함수
     private File createImageFile() throws IOException {
