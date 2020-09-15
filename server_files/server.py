@@ -5,6 +5,11 @@ import io
 from PIL import ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
+def write_utf8(s, sock):
+    encoded = s.encode(encoding='utf-8')
+    sock.sendall(len(encoded).to_bytes(4, byteorder="big"))
+    sock.sendall(encoded)
+
 def get_bytes_stream(sock, length):
     buf = b''
     try:
@@ -38,12 +43,17 @@ while True:
     length = int(len_bytes)
 
     img_bytes = get_bytes_stream(client_sock, length)
-
-    with open("pill_img_from_server/img"+str(idx)+".png", "wb") as writer:
+    img_path = "pill_img_from_server/img"+str(idx)+str(addr[1])+".png"
+   
+    with open(img_path, "wb") as writer:
         writer.write(img_bytes)
+    print(img_path+" is saved")
 
-    print("pill_img_from_server/img"+str(idx)+".png"+" is saved")
-
+    write_utf8(img_path, client_sock)
+    print(len(img_path))
+    write_utf8(img_path, client_sock)
+    print(len(img_path))
+    
     client_sock.close()
 
 server_sock.close()

@@ -64,6 +64,7 @@ public class add_pill extends AppCompatActivity implements View.OnClickListener 
 
         }
     }
+
     public void search_button(View v) {
         Intent intent = new Intent(getApplicationContext(), search_result.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
