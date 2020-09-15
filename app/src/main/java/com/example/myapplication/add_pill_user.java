@@ -184,6 +184,7 @@ public class add_pill_user extends AppCompatActivity {
         company = sr.pill_company;
         pill_name = sr.pill_name;
         user_id = login_.sId;
+        //user_id="suhyune";
         img_path = "temp.jpg";
         save_DB save_in = new save_DB();
         save_in.execute();
