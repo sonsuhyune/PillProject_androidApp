@@ -22,6 +22,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewDebug;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -40,8 +41,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.nio.charset.Charset;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -52,10 +55,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DataInputStream dis;
     private String ip = "203.255.176.79";
     private int port = 8088;
+    private String img_path;
 
     final String TAG = getClass().getSimpleName();
     ImageView imageView;
     ImageButton cameraBtn;
+    TextView result_text;
     final static int TAKE_PICTURE = 1;
     static int check_flag = 1;
     String mCurrentPhotoPath;
@@ -64,6 +69,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Bitmap rotatedBitmap = null;
     ImageView photoImageView;
     private String mImage;
+
+    private String mark;
+    private final Charset UTF8_CHARSET = Charset.forName("UTF-8");
 
 
     @Override
@@ -98,11 +106,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    public String readUTF8 (DataInputStream in) throws IOException {
+        int length = in.readInt();
+        byte[] encoded = new byte[length];
+        in.readFully(encoded, 0, length);
+        return new String(encoded, UTF8_CHARSET);
+    }
+
     void connect(){
         mHandler = new Handler();
+
         Log.w("connect","연결 하는중");
         Thread checkUpdate = new Thread() {
-            private int i = 0;
             public void run() {
                 ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
                 rotatedBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArray);
@@ -136,6 +151,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     dos.write(bytes);
                     dos.flush();
+
+                    img_path = readUTF8(dis);
+                    Log.w("img_path", img_path);
+                    mark = readUTF8(dis);
+                    socket.close();
+
                 }
                 catch (Exception e){
                     Log.w("error", "error occur");
