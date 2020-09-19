@@ -42,7 +42,7 @@ public class add_pill_user extends AppCompatActivity {
     login login_ = new login();  // user id를 받아오기 위한
     String img_path = "temp.jpg";
     String company;
-    String user_id;
+    String user_id =login_.sId;
     String pill_name;
     private Button button;
     static final String TAG = "ProfileActivityTAG";
@@ -183,7 +183,7 @@ public class add_pill_user extends AppCompatActivity {
         nickname = "test";
         company = sr.pill_company;
         pill_name = sr.pill_name;
-        user_id = login_.sId;
+        //user_id = login_.sId;
         //user_id="suhyune";
         img_path = "temp.jpg";
         save_DB save_in = new save_DB();
