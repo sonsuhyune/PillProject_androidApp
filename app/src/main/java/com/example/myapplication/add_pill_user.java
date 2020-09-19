@@ -15,6 +15,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -35,8 +36,33 @@ import java.io.IOException;
 import java.util.Date;
 
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.TimePicker;
+import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import static com.example.myapplication.login.sId;
 
 public class add_pill_user extends AppCompatActivity {
+
+    CheckBox Mon_rb,Sun_rb,Tue_rb,Wed_rb,Thu_rb, Fri_rb, Sat_rb;
+
     final Context context = this;
     search_result sr = new search_result(); //company이름을 받아오기 위한
     login login_ = new login();  // user id를 받아오기 위한
@@ -54,12 +80,12 @@ public class add_pill_user extends AppCompatActivity {
     final static int CAPTURE_IMAGE = 2;  //카메라로찍은 사진선택
     private String mCurrentPhotoPath;
     EditText et_nickname;
-    String nickname;
+    static String nickname;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //mImageView = findViewById(R.id.imageView);
-        et_nickname = (EditText) findViewById(R.id.nick);
+
 
 
         setContentView(R.layout.add_pill_user);
@@ -71,8 +97,172 @@ public class add_pill_user extends AppCompatActivity {
                 photoDialogRadio(); //갤러리에서 불러오기 or 사진찍어서 불러오기
             }
         });
-    }
 
+        final TimePicker picker=(TimePicker)findViewById(R.id.timePicker);
+        picker.setIs24HourView(true);
+        et_nickname = (EditText) findViewById(R.id.nick);
+        // 앞서 설정한 값으로 보여주기
+        // 없으면 디폴트 값은 현재시간
+        SharedPreferences sharedPreferences = getSharedPreferences("daily alarm", MODE_PRIVATE);
+        long millis = sharedPreferences.getLong("nextNotifyTime", Calendar.getInstance().getTimeInMillis());
+
+        Calendar nextNotifyTime = new GregorianCalendar();
+        nextNotifyTime.setTimeInMillis(millis);
+
+        Date nextDate = nextNotifyTime.getTime();
+        String date_text = new SimpleDateFormat("yyyy년 MM월 dd일 EE요일 a hh시 mm분 ", Locale.getDefault()).format(nextDate);
+        Toast.makeText(getApplicationContext(),"[처음 실행시] 다음 알람은 " + date_text + "으로 알람이 설정되었습니다!", Toast.LENGTH_SHORT).show();
+
+
+        // 이전 설정값으로 TimePicker 초기화
+        Date currentTime = nextNotifyTime.getTime();
+        SimpleDateFormat HourFormat = new SimpleDateFormat("kk", Locale.getDefault());
+        SimpleDateFormat MinuteFormat = new SimpleDateFormat("mm", Locale.getDefault());
+
+        int pre_hour = Integer.parseInt(HourFormat.format(currentTime));
+        int pre_minute = Integer.parseInt(MinuteFormat.format(currentTime));
+
+
+        if (Build.VERSION.SDK_INT >= 23 ){
+            picker.setHour(pre_hour);
+            picker.setMinute(pre_minute);
+        }
+        else{
+            picker.setCurrentHour(pre_hour);
+            picker.setCurrentMinute(pre_minute);
+        }
+
+
+        Button button = (Button) findViewById(R.id.button2);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                nickname=et_nickname.getText().toString().trim();
+                System.out.println("========================================================");
+                System.out.println(nickname);
+
+                Mon_rb = (CheckBox) findViewById(R.id.Button_Mon);
+                Sun_rb = (CheckBox) findViewById(R.id.Button_Sun);
+                Tue_rb = (CheckBox) findViewById(R.id.Button_Tue);
+                Wed_rb = (CheckBox) findViewById(R.id.Button_Wed);
+                Thu_rb = (CheckBox) findViewById(R.id.Button_Thu);
+                Fri_rb = (CheckBox) findViewById(R.id.Button_Fri);
+                Sat_rb = (CheckBox) findViewById(R.id.Button_Sat);
+
+
+                int hour, hour_24, minute;
+                String am_pm;
+                if (Build.VERSION.SDK_INT >= 23 ){
+                    hour_24 = picker.getHour();
+                    minute = picker.getMinute();
+                }
+                else{
+                    hour_24 = picker.getCurrentHour();
+                    minute = picker.getCurrentMinute();
+                }
+                if(hour_24 > 12) {
+                    am_pm = "PM";
+                    hour = hour_24 - 12;
+                }
+                else
+                {
+                    hour = hour_24;
+                    am_pm="AM";
+                }
+
+                // 현재 지정된 시간으로 알람 시간 설정
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(System.currentTimeMillis());
+                calendar.set(Calendar.HOUR_OF_DAY, hour_24);
+                calendar.set(Calendar.MINUTE, minute);
+                calendar.set(Calendar.SECOND, 0);
+
+                // 이미 지난 시간을 지정했다면 다음날 같은 시간으로 설정
+                if (calendar.before(Calendar.getInstance())) {
+                    calendar.add(Calendar.DATE, 1);
+                }
+
+                Date currentDateTime = calendar.getTime();
+                String date_text = new SimpleDateFormat("yyyy년 MM월 dd일 EE요일 a hh시 mm분 ", Locale.getDefault()).format(currentDateTime);
+                Toast.makeText(getApplicationContext(),date_text + "으로 알람이 설정되었습니다!", Toast.LENGTH_SHORT).show();
+
+                //  Preference에 설정한 값 저장
+                SharedPreferences.Editor editor = getSharedPreferences("daily alarm", MODE_PRIVATE).edit();
+                editor.putLong("nextNotifyTime", (long)calendar.getTimeInMillis());
+                editor.apply();
+
+
+                diaryNotification(calendar);
+            }
+
+        });
+
+
+
+
+    }
+    void diaryNotification(Calendar calendar)
+    {
+//        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+//        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+//        Boolean dailyNotify = sharedPref.getBoolean(SettingsActivity.KEY_PREF_DAILY_NOTIFICATION, true);
+        Boolean dailyNotify = true; // 무조건 알람을 사용
+
+        boolean[] week = {false, Sun_rb.isChecked(),Mon_rb.isChecked(), Tue_rb.isChecked(),Wed_rb.isChecked(),Thu_rb.isChecked(),Fri_rb.isChecked(),Sat_rb.isChecked() };
+
+
+
+
+
+
+        PendingIntent pendingIntent;
+        AlarmManager alarmManager;
+        PackageManager pm = this.getPackageManager();
+        ComponentName receiver = new ComponentName(this, DeviceBootReceiver.class);
+        Intent alarmIntent = new Intent(this, AlarmReceiver.class);
+
+        alarmIntent.putExtra("one_time", false);
+        alarmIntent.putExtra("day_of_week", week);
+        pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+
+        //PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
+        //larmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+
+        // 사용자가 매일 알람을 허용했다면
+        if (dailyNotify) {
+
+
+            if (alarmManager != null) {
+
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                        AlarmManager.INTERVAL_DAY, pendingIntent);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                }
+            }
+
+            // 부팅 후 실행되는 리시버 사용가능하게 설정
+            pm.setComponentEnabledSetting(receiver,
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                    PackageManager.DONT_KILL_APP);
+
+        }
+
+//        else { //Disable Daily Notifications
+//            if (PendingIntent.getBroadcast(this, 0, alarmIntent, 0) != null && alarmManager != null) {
+//                alarmManager.cancel(pendingIntent);
+//                //Toast.makeText(this,"Notifications were disabled",Toast.LENGTH_SHORT).show();
+//            }
+//            pm.setComponentEnabledSetting(receiver,
+//                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+//                    PackageManager.DONT_KILL_APP);
+//        }
+        save();
+    }
     @Override //갤러리에서 이미지 불러온 후 행동
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
@@ -178,16 +368,21 @@ public class add_pill_user extends AppCompatActivity {
         Toast.makeText(getApplicationContext()," 뒤로가기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
     }
     //<여기부터 mysql 연동>
-    public void save(View v){
-        //nickname=et_nickname.getText().toString().trim();
-        nickname = "test";
+    public void save(){
+        nickname=et_nickname.getText().toString().trim();
+        //nickname = "test";
         company = sr.pill_company;
         pill_name = sr.pill_name;
-        //user_id = login_.sId;
+        user_id = sId;
         //user_id="suhyune";
         img_path = "temp.jpg";
         save_DB save_in = new save_DB();
         save_in.execute();
+        Intent intent = new Intent(getApplicationContext(), after_login.class);
+        startActivity(intent);
+        overridePendingTransition(R.transition.anim_slide_a, R.transition.anim_slide_b);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
 
     }

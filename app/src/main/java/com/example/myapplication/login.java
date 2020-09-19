@@ -27,7 +27,7 @@ public class login  extends AppCompatActivity {
     final Context context = this;
 
     EditText et_id, et_pw;
-    String sId, sPw;
+    static String sId, sPw;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
