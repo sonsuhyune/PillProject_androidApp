@@ -269,62 +269,6 @@ public class add_pill_user extends AppCompatActivity {
         save();
     }
 
-    private void saveToInternalStorage(){
-        img_file_name = user_id.concat("_").concat(nickname);
-        File img_file_path = new File(img_internal_dir, img_file_name);
-
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(img_file_path);
-            img.compress(Bitmap.CompressFormat.PNG, 100, fos);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        } finally {
-            try {
-                fos.close();
-            } catch (IOException e){
-                e.printStackTrace();
-            }
-        }
-    }
-
-    @Override //갤러리에서 이미지 불러온 후 행동
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request we're responding to
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
-            try {
-                InputStream in = getContentResolver().openInputStream(data.getData());
-                img = BitmapFactory.decodeStream(in);
-                in.close();
-                // 이미지 표시
-                mImageView.setImageBitmap(img);
-                Log.d(TAG, "갤러리 inputStream: " + data.getData());
-                Log.d(TAG, "갤러리 사진decodeStream: " + img);
-                saveToInternalStorage();
-
-                mTmpDownloadImageUri = null;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else if (requestCode == CAPTURE_IMAGE && resultCode == Activity.RESULT_OK) {
-            if (resultCode == RESULT_OK) {
-                try {
-                    File file = new File(mCurrentPhotoPath);
-                    InputStream in = getContentResolver().openInputStream(Uri.fromFile(file));
-                    img = BitmapFactory.decodeStream(in);
-                    mImageView.setImageBitmap(img);
-                    in.close();
-                    saveToInternalStorage();
-
-                    mTmpDownloadImageUri = null;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
     private void photoDialogRadio() {
         final CharSequence[] PhotoModels = {"갤러리에서 가져오기", "카메라로 촬영 후 가져오기", "기본사진으로 하기"};
         AlertDialog.Builder alt_bld = new AlertDialog.Builder(this);
@@ -350,6 +294,42 @@ public class add_pill_user extends AppCompatActivity {
         AlertDialog alert = alt_bld.create();
         alert.show();
     }
+
+    @Override //갤러리에서 이미지 불러온 후 행동
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
+            try {
+                InputStream in = getContentResolver().openInputStream(data.getData());
+                img = BitmapFactory.decodeStream(in);
+                in.close();
+                // 이미지 표시
+                mImageView.setImageBitmap(img);
+                Log.d(TAG, "갤러리 inputStream: " + data.getData());
+                Log.d(TAG, "갤러리 사진decodeStream: " + img);
+
+                mTmpDownloadImageUri = null;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (requestCode == CAPTURE_IMAGE && resultCode == Activity.RESULT_OK) {
+            if (resultCode == RESULT_OK) {
+                try {
+                    File file = new File(mCurrentPhotoPath);
+                    InputStream in = getContentResolver().openInputStream(Uri.fromFile(file));
+                    img = BitmapFactory.decodeStream(in);
+                    mImageView.setImageBitmap(img);
+                    in.close();
+
+                    mTmpDownloadImageUri = null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     private void takePictureFromCameraIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
@@ -396,8 +376,35 @@ public class add_pill_user extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Toast.makeText(getApplicationContext()," 뒤로가기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
     }
+
+    private void saveToInternalStorage(){
+        System.out.println("saveToInternalStorage>>");
+        img_file_name = user_id.concat("_").concat(nickname);
+        System.out.println("1");
+        File img_file_path = new File(img_internal_dir, img_file_name);
+        System.out.println("2");
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(img_file_path);
+            img.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
     //<여기부터 mysql 연동>
     public void save(){
+
+        saveToInternalStorage(); //save image in user phone inner storage
+
         nickname=et_nickname.getText().toString().trim();
         //nickname = "test";
         company = sr.pill_company;
