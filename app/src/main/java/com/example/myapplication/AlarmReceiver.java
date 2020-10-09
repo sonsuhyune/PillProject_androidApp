@@ -77,7 +77,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             notificationManager.notify(1234, builder.build());
             boolean[] week = extra.getBooleanArray("day_of_week");
             Calendar nextNotifyTime = Calendar.getInstance();
-            if(!week[nextNotifyTime.get(Calendar.DAY_OF_WEEK)])
+            if (!week[nextNotifyTime.get(Calendar.DAY_OF_WEEK)])
                 return;
             // 내일 같은 시간으로 알람시간 결정
             nextNotifyTime.add(Calendar.DATE, 1);
@@ -89,7 +89,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
             Date currentDateTime = nextNotifyTime.getTime();
             String date_text = new SimpleDateFormat("yyyy년 MM월 dd일 EE요일 a hh시 mm분 ", Locale.getDefault()).format(currentDateTime);
-            Toast.makeText(context.getApplicationContext(),"다음 알람은 " + date_text + "으로 알람이 설정되었습니다!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context.getApplicationContext(), "다음 알람은 " + date_text + "으로 알람이 설정되었습니다!", Toast.LENGTH_SHORT).show();
         }
     }
 }
