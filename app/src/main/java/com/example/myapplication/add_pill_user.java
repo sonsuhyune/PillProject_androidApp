@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,6 +12,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -21,12 +23,18 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.Socket;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
@@ -66,7 +74,8 @@ public class add_pill_user extends AppCompatActivity {
     final Context context = this;
     search_result sr = new search_result(); //company이름을 받아오기 위한
     login login_ = new login();  // user id를 받아오기 위한
-    String img_path = "temp.jpg";
+    static File img_internal_dir;
+    String img_file_name;
     String company;
     String user_id =login_.sId;
     String pill_name;
@@ -86,7 +95,8 @@ public class add_pill_user extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //mImageView = findViewById(R.id.imageView);
 
-
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        img_internal_dir = cw.getDir("imgageDir", context.MODE_PRIVATE);
 
         setContentView(R.layout.add_pill_user);
         button = findViewById(R.id.button); ////
@@ -210,11 +220,6 @@ public class add_pill_user extends AppCompatActivity {
 
         boolean[] week = {false, Sun_rb.isChecked(),Mon_rb.isChecked(), Tue_rb.isChecked(),Wed_rb.isChecked(),Thu_rb.isChecked(),Fri_rb.isChecked(),Sat_rb.isChecked() };
 
-
-
-
-
-
         PendingIntent pendingIntent;
         AlarmManager alarmManager;
         PackageManager pm = this.getPackageManager();
@@ -263,6 +268,27 @@ public class add_pill_user extends AppCompatActivity {
 //        }
         save();
     }
+
+    private void saveToInternalStorage(){
+        img_file_name = user_id.concat("_").concat(nickname);
+        File img_file_path = new File(img_internal_dir, img_file_name);
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(img_file_path);
+            img.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
     @Override //갤러리에서 이미지 불러온 후 행동
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
@@ -276,6 +302,7 @@ public class add_pill_user extends AppCompatActivity {
                 mImageView.setImageBitmap(img);
                 Log.d(TAG, "갤러리 inputStream: " + data.getData());
                 Log.d(TAG, "갤러리 사진decodeStream: " + img);
+                saveToInternalStorage();
 
                 mTmpDownloadImageUri = null;
             } catch (Exception e) {
@@ -289,6 +316,7 @@ public class add_pill_user extends AppCompatActivity {
                     img = BitmapFactory.decodeStream(in);
                     mImageView.setImageBitmap(img);
                     in.close();
+                    saveToInternalStorage();
 
                     mTmpDownloadImageUri = null;
                 } catch (Exception e) {
@@ -359,6 +387,7 @@ public class add_pill_user extends AppCompatActivity {
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
+
     public void after_back(View v) {
         Intent intent = new Intent(getApplicationContext(), add_pill.class);
         startActivity(intent);
@@ -375,7 +404,6 @@ public class add_pill_user extends AppCompatActivity {
         pill_name = sr.pill_name;
         user_id = sId;
         //user_id="suhyune";
-        img_path = "temp.jpg";
         save_DB save_in = new save_DB();
         save_in.execute();
         Intent intent = new Intent(getApplicationContext(), after_login.class);
@@ -395,7 +423,7 @@ public class add_pill_user extends AppCompatActivity {
         protected Void doInBackground(Void... unused) {
 
             /* 인풋 파라메터값 생성 */
-            String param = "u_id=" + user_id + "&u_nick=" + nickname + "&pill_name=" + pill_name + "&img_path=" + img_path+"";
+            String param = "u_id=" + user_id + "&u_nick=" + nickname + "&pill_name=" + pill_name + "&img_path=" + img_file_name+"";
             try {
                 /* 서버연결 */
                 URL url = new URL(

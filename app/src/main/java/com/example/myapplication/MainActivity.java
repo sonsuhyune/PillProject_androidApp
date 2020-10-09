@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DataOutputStream dos;
     private DataInputStream dis;
     private String ip = "203.255.176.79";
-    private int port = 8088;
+    private int port = 8088; //pill_img_search_server.py
     private String img_path;
 
     final String TAG = getClass().getSimpleName();
