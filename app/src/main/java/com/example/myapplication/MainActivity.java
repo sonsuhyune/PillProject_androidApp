@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageView photoImageView;
     private String mImage;
 
-    private String mark;
+    static String mark = "CZT";
     private final Charset UTF8_CHARSET = Charset.forName("UTF-8");
 
 
