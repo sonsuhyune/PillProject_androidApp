@@ -2,13 +2,10 @@ package com.example.myapplication;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import android.widget.Toast;
@@ -26,11 +23,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 
 import static com.example.myapplication.MainActivity.mark;
-import static com.example.myapplication.login.sId;
+
 
 public class search_result_after_login extends AppCompatActivity {
 

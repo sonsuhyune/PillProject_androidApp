@@ -320,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void camera_click(View v) {
 
-        Toast.makeText(getApplicationContext(),"사진으로 검이 눌렸습니다.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),"사진으로 검색이 눌렸습니다.", Toast.LENGTH_SHORT).show();
     }
     public void login_click(View v) {
         Intent intent = new Intent(getApplicationContext(), login.class);
