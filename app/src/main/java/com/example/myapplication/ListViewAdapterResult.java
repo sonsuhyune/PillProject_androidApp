@@ -10,8 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import static com.example.myapplication.login.sId;
 
 public class ListViewAdapterResult extends BaseAdapter {
+
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>() ;
 
@@ -35,7 +37,10 @@ public class ListViewAdapterResult extends BaseAdapter {
         // "listview_item" Layout을 inflate하여 convertView 참조 획득.
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.result_item, parent, false);
+            if (sId == null)
+                convertView = inflater.inflate(R.layout.result_item_before_login, parent, false);
+            else
+                convertView = inflater.inflate(R.layout.result_item, parent, false);
         }
 
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
