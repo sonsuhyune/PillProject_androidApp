@@ -2,8 +2,13 @@ package com.example.myapplication;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
@@ -17,23 +22,43 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.Socket;
 import java.net.URL;
 
 import static com.example.myapplication.MainActivity.mark;
 
 public class search_result extends AppCompatActivity {
 
+    /* 이미지 socket 통신 부분 */
+    private Handler mHandler;
+    private Socket socket;
+    private DataOutputStream dos;
+    private DataInputStream dis;
+    private InputStream in;
+    private BufferedInputStream bis;
+    private String ip = "203.255.176.79";
+    private int port = 8089; //DB_img_server.py
+
 
     private static String TAG = "search_result";
-
     private static final String TAG_JSON="user_result";
     private static final String TAG_IMG = "img";
     private static final String TAG_NAME = "pill_name";
+
+    private int pill_num = 0;
+    private byte[][] img_list = null;
+    private String[] name_list = null;
 
     ListView mlistView;
     ListViewAdapterResult adapter;
@@ -78,6 +103,8 @@ public class search_result extends AppCompatActivity {
             mJsonString = result;
 
             System.out.println(mJsonString);
+            connect();
+            System.out.println("socket done");
             showResult();
         }
 
@@ -146,35 +173,126 @@ public class search_result extends AppCompatActivity {
         }
     }
 
-    private void showResult(){
+    public byte[] InputStreamToByteArray(int data_len, DataInputStream in) { //https://evnt-hrzn.tistory.com/18
 
-        // 리스트뷰 참조 및 Adapter달기
-
-
+        int loop = (int)(data_len/1024);
+        System.out.println("loop"+Integer.toString(loop));
+        byte[] resbytes = new byte[data_len];
+        int offset = 0;
         try {
-            JSONObject jsonObject = new JSONObject(mJsonString);
-            JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
-
-            for(int i=0;i<jsonArray.length();i++){
-
-                JSONObject item = jsonArray.getJSONObject(i);
-
-                String img = item.getString(TAG_IMG);
-                String name = item.getString(TAG_NAME);
-
-
-
-                adapter.addItem(ContextCompat.getDrawable(this, R.drawable.camera2), name);
+            for (int i=0; i<loop; i++){
+                in.readFully(resbytes, offset, 1024);
+                offset += 1024;
             }
-
-            mlistView.setAdapter(adapter);
-
-        } catch (JSONException e) {
-
-            Log.d(TAG, "showResult : ", e);
+            in.readFully(resbytes, offset, data_len-(loop*1024));
+            System.out.println("resbytes len:"+Integer.toString(resbytes.length));
+            System.out.println("image get!!!!");
+        } catch (IOException e){
+            e.printStackTrace();
         }
+        return resbytes;
+    }
+
+    void connect() {
+        mHandler = new Handler();
+
+        Log.w("connect", "연결 하는중");
+        Thread checkUpdate = new Thread() {
+            public void run() {
+                // 서버 접속
+                try {
+                    socket = new Socket(ip, port);
+                    Log.w("서버 접속됨", "서버 접속됨");
+                } catch (IOException e1) {
+                    Log.w("서버접속못함", "서버접속못함");
+                    e1.printStackTrace();
+                }
+
+                Log.w("edit 넘어가야 할 값 : ", "안드로이드에서 서버로 연결요청");
+
+                try {
+                    dis = new DataInputStream(socket.getInputStream());
+                    //bis = new BufferedInputStream(socket.getInputStream(), 1024);
+                    dos = new DataOutputStream(socket.getOutputStream());
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.w("버퍼", "버퍼생성 잘못됨");
+                }
+                Log.w("버퍼", "버퍼생성 잘됨");
+
+                // 리스트뷰 참조 및 Adapter달기
+                try {
+                    JSONObject jsonObject = new JSONObject(mJsonString);
+                    JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
+
+                    pill_num = jsonArray.length();
+                    img_list = new byte[pill_num][];
+                    name_list = new String[pill_num];
+
+                    try {
+                        dos.write(pill_num);
+                        dos.flush();
+                        System.out.println("the number of image: " + Integer.toString(pill_num));
+
+                    } catch (IOException e) {
+                        Log.d(TAG, "send pill number error");
+                    }
+
+                    for (int i = 0; i < pill_num; i++) {
+                        JSONObject item = jsonArray.getJSONObject(i);
+                        Bitmap img_bitmap = null;
+                        int data_len = 0;
+
+                        String img = item.getString(TAG_IMG);
+                        name_list[i] = item.getString(TAG_NAME);
+
+                        try {
+                            dos.writeUTF(img); // server path + img -> server
+                            dos.flush();
+                            System.out.println("send image file name done!");
+
+                            data_len = dis.readInt();
+                            System.out.println(data_len);
+
+                        } catch (IOException e) {
+                            Log.d(TAG, "send image name error");
+                        }
+
+                        // server send img -> android
+                        img_list[i] = InputStreamToByteArray(data_len, dis);
+                        System.out.println("One img done");
+                    }
+                } catch (JSONException e) {
+                    Log.d(TAG, "showResult : ", e);
+                }
+                try{
+                    socket.close();
+                }catch(IOException e){
+
+                }
+            }
+        };
+        checkUpdate.start();
+        try {
+            checkUpdate.join();
+        }catch (InterruptedException e){
+
+        }
+        System.out.println("Thread terminated");
+    }
+
+    private void showResult(){
+        for (int i=0; i<pill_num; i++){
+            Bitmap img_bitmap = BitmapFactory.decodeByteArray(img_list[i], 0, img_list[i].length);
+            Drawable img_drawable = new BitmapDrawable(img_bitmap);
+
+            adapter.addItem(img_drawable, name_list[i]);
+        }
+        mlistView.setAdapter(adapter);
 
     }
+
     public void after_back(View v) {
         Intent intent = new Intent(getApplicationContext(), after_login.class);
         startActivity(intent);
