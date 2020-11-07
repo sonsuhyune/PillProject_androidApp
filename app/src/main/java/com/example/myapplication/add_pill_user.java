@@ -371,8 +371,7 @@ public class add_pill_user extends AppCompatActivity {
     public void save(){
         nickname=et_nickname.getText().toString().trim();
         //nickname = "test";
-        company = sr.pill_company;
-        pill_name = sr.pill_name;
+
         user_id = sId;
         //user_id="suhyune";
         img_path = "temp.jpg";
