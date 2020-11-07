@@ -407,8 +407,7 @@ public class add_pill_user extends AppCompatActivity {
 
         nickname=et_nickname.getText().toString().trim();
         //nickname = "test";
-        company = sr.pill_company;
-        pill_name = sr.pill_name;
+
         user_id = sId;
         //user_id="suhyune";
         save_DB save_in = new save_DB();
