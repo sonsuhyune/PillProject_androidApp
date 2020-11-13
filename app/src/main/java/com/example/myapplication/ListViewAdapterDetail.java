@@ -5,14 +5,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import static com.example.myapplication.show_detail.pill;
+
+
 public class ListViewAdapterDetail extends BaseAdapter {
 
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
-    private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>() ;
+    private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>();
 
     // ListViewAdapter의 생성자
     public ListViewAdapterDetail() {
@@ -51,6 +55,14 @@ public class ListViewAdapterDetail extends BaseAdapter {
         companyTextView.setText(listViewItem.getCompany());
         ingredientTextView.setText(listViewItem.getIngredient());
         volumnTextView.setText(listViewItem.getVolumn());
+
+        Button detail_button = (Button)convertView.findViewById(R.id.button);
+        detail_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pill = listViewItemList.get(pos).getPill_name();
+            }
+        });
 
         return convertView;
     }
