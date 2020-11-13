@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DataOutputStream dos;
     private DataInputStream dis;
     private String ip = "203.255.176.79";
-    private int port = 8088;
+    private int port = 8088; //pill_img_search_server.py
     private String img_path;
 
     final String TAG = getClass().getSimpleName();
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     void connect(){
         mHandler = new Handler();
 
-        Log.w("connect","연결 하는중");
+        //Log.w("connect","연결 하는중");
         Thread checkUpdate = new Thread() {
             public void run() {
                 ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
@@ -126,16 +126,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // 서버 접속
                 try {
                     socket = new Socket(ip, port);
-                    Log.w("서버 접속됨", "서버 접속됨");
+                    //Log.w("서버 접속됨", "서버 접속됨");
                 } catch (IOException e1) {
                     Log.w("서버접속못함", "서버접속못함");
                     e1.printStackTrace();
                 }
 
-                Log.w("edit 넘어가야 할 값 : ","안드로이드에서 서버로 연결요청");
+                //Log.w("edit 넘어가야 할 값 : ","안드로이드에서 서버로 연결요청");
 
                 try {
-                    Log.w("Image Length:", Integer.toString(bytes.length));
+                    //Log.w("Image Length:", Integer.toString(bytes.length));
                     dos = new DataOutputStream(socket.getOutputStream());
                     dis = new DataInputStream(socket.getInputStream());
 
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     e.printStackTrace();
                     Log.w("버퍼", "버퍼생성 잘못됨");
                 }
-                Log.w("버퍼","버퍼생성 잘됨");
+                //Log.w("버퍼","버퍼생성 잘됨");
 
                 try{
                     dos.writeUTF(Integer.toString(bytes.length));
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     dos.flush();
 
                     img_path = readUTF8(dis);
-                    Log.w("img_path", img_path);
+                    //Log.w("img_path", img_path);
                     mark = readUTF8(dis);
                     socket.close();
 

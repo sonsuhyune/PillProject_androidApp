@@ -2,6 +2,9 @@ package com.example.myapplication;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,6 +24,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -29,6 +35,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.example.myapplication.add_pill_user.img_internal_dir;
 import static com.example.myapplication.login.sId;
 
 public class show_pill extends AppCompatActivity {
@@ -153,6 +160,19 @@ public class show_pill extends AppCompatActivity {
         }
     }
 
+    private Drawable loadImagaeFromStorage(String img_file_name){
+        Drawable img = null;
+        try{
+            File f = new File(img_internal_dir, img_file_name);
+            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+            img = new BitmapDrawable(b);
+        }
+        catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
+        return img;
+    }
+
     private void showResult(){
 
         // 리스트뷰 참조 및 Adapter달기
@@ -166,12 +186,13 @@ public class show_pill extends AppCompatActivity {
 
                 JSONObject item = jsonArray.getJSONObject(i);
 
-                String img = item.getString(TAG_IMG);
+                String img_file_name = item.getString(TAG_IMG);
                 String name = item.getString(TAG_NAME);
                 String nickname = item.getString(TAG_NICKNAME);
 
+                Drawable img = loadImagaeFromStorage(img_file_name);
 
-                adapter.addItem(ContextCompat.getDrawable(this, R.drawable.camera2), name, nickname);
+                adapter.addItem(img, name, nickname);
             }
 
             mlistView.setAdapter(adapter);

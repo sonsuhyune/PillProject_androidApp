@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,6 +12,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -21,12 +23,18 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.Socket;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
@@ -66,7 +74,8 @@ public class add_pill_user extends AppCompatActivity {
     final Context context = this;
     search_result sr = new search_result(); //company이름을 받아오기 위한
     login login_ = new login();  // user id를 받아오기 위한
-    String img_path = "temp.jpg";
+    static File img_internal_dir;
+    String img_file_name;
     String company;
     String user_id =login_.sId;
     String pill_name;
@@ -86,7 +95,8 @@ public class add_pill_user extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //mImageView = findViewById(R.id.imageView);
 
-
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        img_internal_dir = cw.getDir("imgageDir", context.MODE_PRIVATE);
 
         setContentView(R.layout.add_pill_user);
         button = findViewById(R.id.button); ////
@@ -111,7 +121,7 @@ public class add_pill_user extends AppCompatActivity {
 
         Date nextDate = nextNotifyTime.getTime();
         String date_text = new SimpleDateFormat("yyyy년 MM월 dd일 EE요일 a hh시 mm분 ", Locale.getDefault()).format(nextDate);
-        Toast.makeText(getApplicationContext(),"[처음 실행시] 다음 알람은 " + date_text + "으로 알람이 설정되었습니다!", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),"[처음 실행시] 다음 알람은 " + date_text + "으로 알람이 설정되었습니다!", Toast.LENGTH_SHORT).show();
 
 
         // 이전 설정값으로 TimePicker 초기화
@@ -210,11 +220,6 @@ public class add_pill_user extends AppCompatActivity {
 
         boolean[] week = {false, Sun_rb.isChecked(),Mon_rb.isChecked(), Tue_rb.isChecked(),Wed_rb.isChecked(),Thu_rb.isChecked(),Fri_rb.isChecked(),Sat_rb.isChecked() };
 
-
-
-
-
-
         PendingIntent pendingIntent;
         AlarmManager alarmManager;
         PackageManager pm = this.getPackageManager();
@@ -263,6 +268,33 @@ public class add_pill_user extends AppCompatActivity {
 //        }
         save();
     }
+
+    private void photoDialogRadio() {
+        final CharSequence[] PhotoModels = {"갤러리에서 가져오기", "카메라로 촬영 후 가져오기", "기본사진으로 하기"};
+        AlertDialog.Builder alt_bld = new AlertDialog.Builder(this);
+        //alt_bld.setIcon(R.drawable.icon);
+        alt_bld.setTitle("프로필사진 설정");
+        alt_bld.setSingleChoiceItems(PhotoModels, -1, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                Toast.makeText(add_pill_user.this, PhotoModels[item] + "가 선택되었습니다.", Toast.LENGTH_SHORT).show();
+                if (item == 0) { //갤러리
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(intent, PICK_IMAGE);
+                } else if (item == 1) { //카메라찍은 사진가져오기
+                    takePictureFromCameraIntent();
+                } else { //기본화면으로하기
+                    mImageView.setImageResource(R.drawable.camera2);
+                    img = null;
+                    mTmpDownloadImageUri = null;
+                }
+            }
+        });
+        AlertDialog alert = alt_bld.create();
+        alert.show();
+    }
+
     @Override //갤러리에서 이미지 불러온 후 행동
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
@@ -297,31 +329,7 @@ public class add_pill_user extends AppCompatActivity {
             }
         }
     }
-    private void photoDialogRadio() {
-        final CharSequence[] PhotoModels = {"갤러리에서 가져오기", "카메라로 촬영 후 가져오기", "기본사진으로 하기"};
-        AlertDialog.Builder alt_bld = new AlertDialog.Builder(this);
-        //alt_bld.setIcon(R.drawable.icon);
-        alt_bld.setTitle("프로필사진 설정");
-        alt_bld.setSingleChoiceItems(PhotoModels, -1, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
-                Toast.makeText(add_pill_user.this, PhotoModels[item] + "가 선택되었습니다.", Toast.LENGTH_SHORT).show();
-                if (item == 0) { //갤러리
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(intent, PICK_IMAGE);
-                } else if (item == 1) { //카메라찍은 사진가져오기
-                    takePictureFromCameraIntent();
-                } else { //기본화면으로하기
-                    mImageView.setImageResource(R.drawable.camera2);
-                    img = null;
-                    mTmpDownloadImageUri = null;
-                }
-            }
-        });
-        AlertDialog alert = alt_bld.create();
-        alert.show();
-    }
+
     private void takePictureFromCameraIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
@@ -359,6 +367,7 @@ public class add_pill_user extends AppCompatActivity {
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
+
     public void after_back(View v) {
         Intent intent = new Intent(getApplicationContext(), add_pill.class);
         startActivity(intent);
@@ -367,14 +376,40 @@ public class add_pill_user extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Toast.makeText(getApplicationContext()," 뒤로가기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
     }
+
+    private void saveToInternalStorage(){
+        System.out.println("saveToInternalStorage>>");
+        img_file_name = user_id.concat("_").concat(nickname);
+        System.out.println("1");
+        File img_file_path = new File(img_internal_dir, img_file_name);
+        System.out.println("2");
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(img_file_path);
+            img.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
     //<여기부터 mysql 연동>
     public void save(){
+
+        saveToInternalStorage(); //save image in user phone inner storage
+
         nickname=et_nickname.getText().toString().trim();
         //nickname = "test";
 
         user_id = sId;
         //user_id="suhyune";
-        img_path = "temp.jpg";
         save_DB save_in = new save_DB();
         save_in.execute();
         Intent intent = new Intent(getApplicationContext(), after_login.class);
@@ -394,7 +429,7 @@ public class add_pill_user extends AppCompatActivity {
         protected Void doInBackground(Void... unused) {
 
             /* 인풋 파라메터값 생성 */
-            String param = "u_id=" + user_id + "&u_nick=" + nickname + "&pill_name=" + pill_name + "&img_path=" + img_path+"";
+            String param = "u_id=" + user_id + "&u_nick=" + nickname + "&pill_name=" + pill_name + "&img_path=" + img_file_name+"";
             try {
                 /* 서버연결 */
                 URL url = new URL(
