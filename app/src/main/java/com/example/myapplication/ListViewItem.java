@@ -13,6 +13,7 @@ public class ListViewItem extends AppCompatActivity {
     private Drawable pill ;
     private String pill_name ;
     private String nickname ;
+    private String  company, ingredient, volumn;
 
     public Drawable getPill() {
         return pill;
@@ -36,6 +37,25 @@ public class ListViewItem extends AppCompatActivity {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getIngredient() {
+        return ingredient;
+    }
+    public void setIngredient(String ingredient) {
+        this.ingredient = ingredient;
+    }
+
+    public String getVolumn() { return volumn; }
+    public void setVolumn(String volumn) {
+        this.volumn = volumn;
     }
 
     public void more_button(View v) {

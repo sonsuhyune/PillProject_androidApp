@@ -6,11 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import static com.example.myapplication.login.sId;
+import static com.example.myapplication.show_detail.pill;
 
 public class ListViewAdapterResult extends BaseAdapter {
 
@@ -53,6 +55,14 @@ public class ListViewAdapterResult extends BaseAdapter {
         // 아이템 내 각 위젯에 데이터 반영
         pillImageView.setImageDrawable(listViewItem.getPill());
         pillNameTextView.setText(listViewItem.getPill_name());
+
+        //Button detail_button = (Button)convertView.findViewById(R.id.detail);
+        //detail_button.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View view) {
+         //       pill = listViewItemList.get(pos).getPill_name();
+        //    }
+        //});
 
         return convertView;
     }

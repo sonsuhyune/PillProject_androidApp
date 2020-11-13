@@ -67,10 +67,10 @@ public class search_result extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.search_result);
+        setContentView(R.layout.search_result_before_login);
 
         adapter = new  ListViewAdapterResult();
-        mlistView = (ListView) findViewById(R.id.result_listView);
+        mlistView = (ListView) findViewById(R.id.result_listView_before_login);
 
         //adapter.addItem(ContextCompat.getDrawable(this, R.drawable.camera2), "부르펜");
 
@@ -293,8 +293,9 @@ public class search_result extends AppCompatActivity {
 
     }
 
-    public void after_back(View v) {
-        Intent intent = new Intent(getApplicationContext(), after_login.class);
+    public void search_result_after_login_back(View v) {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
         startActivity(intent);
         overridePendingTransition(R.transition.anim_slide_a, R.transition.anim_slide_b);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

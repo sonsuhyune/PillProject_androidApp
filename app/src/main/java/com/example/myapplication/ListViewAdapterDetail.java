@@ -1,23 +1,25 @@
 package com.example.myapplication;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ListViewAdapter extends BaseAdapter {
+import static com.example.myapplication.show_detail.pill;
+
+
+public class ListViewAdapterDetail extends BaseAdapter {
+
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
-    private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>() ;
+    private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>();
 
     // ListViewAdapter의 생성자
-    public ListViewAdapter() {
+    public ListViewAdapterDetail() {
 
     }
 
@@ -36,21 +38,31 @@ public class ListViewAdapter extends BaseAdapter {
         // "listview_item" Layout을 inflate하여 convertView 참조 획득.
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.listview_item, parent, false);
+            convertView = inflater.inflate(R.layout.show_detail_item, parent, false);
         }
 
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
-        ImageView pillImageView = (ImageView) convertView.findViewById(R.id.imageView1) ;
-        TextView pillNameTextView = (TextView) convertView.findViewById(R.id.name) ;
-        TextView nicknameTextView = (TextView) convertView.findViewById(R.id.name_user) ;
-
+        TextView pillNameTextView = (TextView) convertView.findViewById(R.id.detail_pill_name) ;
+        TextView companyTextView = (TextView) convertView.findViewById(R.id.company) ;
+        TextView ingredientTextView = (TextView) convertView.findViewById(R.id.ingredient) ;
+        TextView volumnTextView = (TextView) convertView.findViewById(R.id.volumn) ;
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
-        final ListViewItem listViewItem = listViewItemList.get(position);
+        ListViewItem listViewItem = listViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
-        pillImageView.setImageDrawable(listViewItem.getPill());
+
         pillNameTextView.setText(listViewItem.getPill_name());
-        nicknameTextView.setText(listViewItem.getNickname());
+        companyTextView.setText(listViewItem.getCompany());
+        ingredientTextView.setText(listViewItem.getIngredient());
+        volumnTextView.setText(listViewItem.getVolumn());
+
+        Button detail_button = (Button)convertView.findViewById(R.id.button);
+        detail_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pill = listViewItemList.get(pos).getPill_name();
+            }
+        });
 
         return convertView;
     }
@@ -68,12 +80,13 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(Drawable pill, String name, String nickname) {
+    public void addItem(String pillname, String company, String ingredient, String volumn) {
         ListViewItem item = new ListViewItem();
 
-        item.setPill(pill);
-        item.setPill_name(name);
-        item.setNickname(nickname);
+        item.setPill_name(pillname);
+        item.setCompany(company);
+        item.setIngredient(ingredient);
+        item.setVolumn(volumn);
 
         listViewItemList.add(item);
     }
