@@ -40,6 +40,8 @@ public class show_detail extends AppCompatActivity {
     private static final String TAG_COMPANY = "company";
     private static final String TAG_WARNING = "warning";
 
+    static String pill = null;
+
     ListView mlistView;
     ListViewAdapterDetail adapter;
     String mJsonString;
@@ -115,7 +117,7 @@ public class show_detail extends AppCompatActivity {
         protected String doInBackground(Void... unused) {
 
             /*show result의 click한 곳 값 받아오기*/
-            String pill = "부광메티마졸정";
+            //String pill = "부광메티마졸정";
 
             /* 인풋 파라메터값 생성 */
             String param = "pill="+pill+"";
