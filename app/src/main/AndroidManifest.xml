@@ -38,8 +38,8 @@
         <activity android:name=".result_in_add_pill"/>
         <activity android:name=".search_result_after_login"/>
         <activity android:name=".saved_pill"/>
-        <activity android:name=".show_detail"/>
         <activity android:name=".show_detail_before_login"/>
+        <activity android:name=".show_detail"/>
 
 
         <provider
