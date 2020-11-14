@@ -56,14 +56,6 @@ public class ListViewAdapterDetail extends BaseAdapter {
         ingredientTextView.setText(listViewItem.getIngredient());
         volumnTextView.setText(listViewItem.getVolumn());
 
-        Button detail_button = (Button)convertView.findViewById(R.id.button);
-        detail_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pill = listViewItemList.get(pos).getPill_name();
-            }
-        });
-
         return convertView;
     }
 
@@ -78,6 +70,7 @@ public class ListViewAdapterDetail extends BaseAdapter {
     public Object getItem(int position) {
         return listViewItemList.get(position) ;
     }
+
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
     public void addItem(String pillname, String company, String ingredient, String volumn) {

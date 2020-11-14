@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,9 @@ import java.util.ArrayList;
 import static com.example.myapplication.login.sId;
 import static com.example.myapplication.show_detail.pill;
 
-public class ListViewAdapterResult extends BaseAdapter {
+public class ListViewAdapterResult extends BaseAdapter  {
+
+    public int pos = 0;
 
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>() ;
@@ -50,19 +53,11 @@ public class ListViewAdapterResult extends BaseAdapter {
         TextView pillNameTextView = (TextView) convertView.findViewById(R.id.pill_name) ;
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
-        ListViewItem listViewItem = listViewItemList.get(position);
+        final ListViewItem listViewItem = listViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
         pillImageView.setImageDrawable(listViewItem.getPill());
         pillNameTextView.setText(listViewItem.getPill_name());
-
-        //Button detail_button = (Button)convertView.findViewById(R.id.detail);
-        //detail_button.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View view) {
-         //       pill = listViewItemList.get(pos).getPill_name();
-        //    }
-        //});
 
         return convertView;
     }
@@ -79,6 +74,10 @@ public class ListViewAdapterResult extends BaseAdapter {
         return listViewItemList.get(position) ;
     }
 
+    public String getPillName(int position){
+        return listViewItemList.get(position).getPill_name();
+    }
+
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
     public void addItem(Drawable pill, String name) {
         ListViewItem item = new ListViewItem();
@@ -87,6 +86,10 @@ public class ListViewAdapterResult extends BaseAdapter {
         item.setPill_name(name);
 
         listViewItemList.add(item);
+    }
+
+    public int getPosition(){
+        return pos;
     }
 
 }

@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import android.widget.Toast;
@@ -36,6 +38,7 @@ import java.net.URL;
 
 
 import static com.example.myapplication.MainActivity.mark;
+import static com.example.myapplication.show_detail.pill;
 
 
 public class search_result_after_login extends AppCompatActivity {
@@ -61,6 +64,7 @@ public class search_result_after_login extends AppCompatActivity {
     private static final String TAG_IMG = "img";
     private static final String TAG_NAME = "pill_name";
 
+
     ListView mlistView;
     ListViewAdapterResult adapter;
     String mJsonString;
@@ -71,6 +75,7 @@ public class search_result_after_login extends AppCompatActivity {
         setContentView(R.layout.search_result);
 
         adapter = new  ListViewAdapterResult();
+
         mlistView = (ListView) findViewById(R.id.result_listView);
 
         //adapter.addItem(ContextCompat.getDrawable(this, R.drawable.camera2), "부르펜");
@@ -107,6 +112,15 @@ public class search_result_after_login extends AppCompatActivity {
             connect();
             System.out.println("socket done");
             showResult();
+            System.out.println("show list");
+            mlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    pill = adapter.getPillName(position);
+                    System.out.println(pill);
+                    show_detail();
+                }
+            });
         }
 
         @Override
@@ -290,9 +304,9 @@ public class search_result_after_login extends AppCompatActivity {
             Drawable img_drawable = new BitmapDrawable(img_bitmap);
 
             adapter.addItem(img_drawable, name_list_after[i]);
+            System.out.println("adapter show pill");
         }
         mlistView.setAdapter(adapter);
-
     }
 
     public void after_back(View v) {
@@ -304,7 +318,7 @@ public class search_result_after_login extends AppCompatActivity {
         Toast.makeText(getApplicationContext()," 뒤로가기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
     }
 
-    public void show_detail (View v){
+    public void show_detail (){
         Intent intent = new Intent(getApplicationContext(), show_detail.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
