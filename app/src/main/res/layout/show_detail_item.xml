@@ -8,30 +8,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_weight="5">
+        android:paddingTop="10pt">
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="10pt">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
                 android:gravity="center_vertical"
-                android:text="품목명      "
+                android:text="품목명       "
+                android:textStyle="bold"
                 android:textColor="#000000"
-                android:textSize="20dp" />
+                android:textSize="23dp" />
 
             <TextView
                 android:id="@+id/detail_pill_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
                 android:gravity="center_vertical"
-                android:text="약이름 결과      "
+                android:text="약이름 결과"
                 android:textColor="#000000"
                 android:textSize="20dp" />
 
@@ -39,24 +38,23 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="10pt">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
                 android:gravity="center_vertical"
-                android:text="회사명      "
+                android:textStyle="bold"
+                android:text="회사명       "
                 android:textColor="#000000"
-                android:textSize="20dp" />
+                android:textSize="23dp" />
 
             <TextView
                 android:id="@+id/company"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
                 android:gravity="center_vertical"
                 android:text="회사 결과"
                 android:textColor="#000000"
@@ -64,59 +62,50 @@
 
         </LinearLayout>
 
-        <LinearLayout
+
+
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textStyle="bold"
+            android:text="성분"
+            android:textColor="#000000"
+            android:textSize="23dp"
+            android:paddingBottom="5pt"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:gravity="center_vertical"
-                android:text="성분              "
-                android:textColor="#000000"
-                android:textSize="20dp" />
+        <TextView
+            android:id="@+id/ingredient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="성분명 결과"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:paddingBottom="10pt"/>
 
-            <TextView
-                android:id="@+id/ingredient"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:gravity="center_vertical"
-                android:text="성분명 결과"
-               android:textColor="#000000"
-                android:textSize="20dp" />
 
-        </LinearLayout>
 
-        <LinearLayout
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textStyle="bold"
+            android:text="용법 용량"
+            android:textColor="#000000"
+            android:textSize="23dp"
+            android:paddingBottom="5pt"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:gravity="center_vertical"
-                android:text="용법 용량            "
-                android:textColor="#000000"
-                android:textSize="20dp" />
+        <TextView
+            android:id="@+id/volumn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="용법용량 결과"
+            android:textColor="#000000"
+            android:textSize="20dp" />
 
-            <TextView
-                android:id="@+id/volumn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:gravity="center_vertical"
-                android:text="용법용량 결과"
-                android:textColor="#000000"
-                android:textSize="20dp" />
 
-        </LinearLayout>
 
     </LinearLayout>
 
