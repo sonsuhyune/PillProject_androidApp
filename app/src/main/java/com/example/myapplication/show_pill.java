@@ -37,6 +37,7 @@ import java.util.HashMap;
 
 import static com.example.myapplication.add_pill_user.img_internal_dir;
 import static com.example.myapplication.login.sId;
+import static com.example.myapplication.saved_pill.saved_pill;
 
 public class show_pill extends AppCompatActivity {
 
@@ -93,6 +94,14 @@ public class show_pill extends AppCompatActivity {
 
             System.out.println(mJsonString);
             showResult();
+            mlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    saved_pill = adapter.getPillName(position);
+                    System.out.println(saved_pill);
+                    saved_pill();
+                }
+            });
         }
 
         @Override
@@ -212,7 +221,7 @@ public class show_pill extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Toast.makeText(getApplicationContext(), " 뒤로가기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
     }
-    public void more_button(View v) {
+    public void saved_pill() {
         Intent intent = new Intent(getApplicationContext(), saved_pill.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -67,6 +67,10 @@ public class ListViewAdapter extends BaseAdapter {
         return listViewItemList.get(position) ;
     }
 
+    public String getPillName(int position){
+        return listViewItemList.get(position).getPill_name();
+    }
+
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
     public void addItem(Drawable pill, String name, String nickname) {
         ListViewItem item = new ListViewItem();
