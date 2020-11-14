@@ -36,8 +36,7 @@ import java.net.HttpURLConnection;
 import java.net.Socket;
 import java.net.URL;
 
-
-import static com.example.myapplication.MainActivity.mark;
+import static com.example.myapplication.after_login.after_login_mark;
 import static com.example.myapplication.show_detail.pill;
 
 
@@ -126,10 +125,8 @@ public class search_result_after_login extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... unused) {
 
-            mark = "MET";
-
             /* 인풋 파라메터값 생성 */
-            String param = "mark="+mark+"";
+            String param = "mark="+after_login_mark+"";
             System.out.println(param);
             Log.e("POST",param);
 
@@ -257,7 +254,6 @@ public class search_result_after_login extends AppCompatActivity {
 
                     for (int i = 0; i < pill_num_after; i++) {
                         JSONObject item = jsonArray.getJSONObject(i);
-                        Bitmap img_bitmap = null;
                         int data_len = 0;
 
                         String img = item.getString(TAG_IMG);

@@ -24,6 +24,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static com.example.myapplication.show_detail.pill;
+
 public class show_detail_before_login extends AppCompatActivity {
 
     private static String TAG = "show_detail";
@@ -109,7 +111,6 @@ public class show_detail_before_login extends AppCompatActivity {
         protected String doInBackground(Void... unused) {
 
             /*show result의 click한 곳 값 받아오기*/
-            String pill = "부광메티마졸정";
 
             /* 인풋 파라메터값 생성 */
             String param = "pill="+pill+"";
