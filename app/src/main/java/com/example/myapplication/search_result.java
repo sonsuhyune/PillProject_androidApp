@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import android.widget.Toast;
@@ -37,6 +38,7 @@ import java.net.Socket;
 import java.net.URL;
 
 import static com.example.myapplication.MainActivity.mark;
+import static com.example.myapplication.show_detail.pill;
 
 public class search_result extends AppCompatActivity {
 
@@ -106,6 +108,14 @@ public class search_result extends AppCompatActivity {
             connect();
             System.out.println("socket done");
             showResult();
+            mlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    pill = adapter.getPillName(position);
+                    System.out.println(pill);
+                    show_detail_before_login();
+                }
+            });
         }
 
         @Override
@@ -305,7 +315,7 @@ public class search_result extends AppCompatActivity {
         Toast.makeText(getApplicationContext()," 뒤로가기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
     }
 
-    public void show_detail_before_login (View v){
+    public void show_detail_before_login (){
         Intent intent = new Intent(getApplicationContext(), show_detail_before_login.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
