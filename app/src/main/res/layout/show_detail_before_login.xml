@@ -5,32 +5,149 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" 알약 상세 정보 "
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.133" />
+    <RelativeLayout
+        android:id="@+id/content_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TabHost
+            android:id="@+id/tabHost1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="600dp"
+                android:orientation="vertical">
+
+                <!-- TabWidget의 id값이 반드시 "tabs"로 지정되어야 함. -->
+
+                <!-- FrameLayout의 id값이 반드시 "tabcontent"로 지정되어야 함. -->
+                <TabWidget
+                    android:id="@android:id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <FrameLayout
+                    android:id="@android:id/tabcontent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!-- 첫 번째 페이지. content1 -->
+                    <LinearLayout
+                        android:id="@+id/content1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="460dp"
+                            android:fillViewport="true"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.582"
+                            tools:layout_constraintBottom_creator="1"
+                            tools:layout_constraintLeft_creator="1"
+                            tools:layout_constraintRight_creator="1"
+                            tools:layout_constraintTop_creator="1">
+
+                            <ListView
+                                android:id="@+id/tab1_listView_before"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:choiceMode="multipleChoice"
+                                android:divider="#ffffff"
+                                android:dividerHeight="50dp" />
+
+                        </ScrollView>
+
+                    </LinearLayout>
+
+                    <!-- 두 번째 페이지. content2 -->
+                    <LinearLayout
+                        android:id="@+id/content2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="460dp"
+                            android:fillViewport="true"
+                            android:scrollbars="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.582"
+                            tools:layout_constraintBottom_creator="1"
+                            tools:layout_constraintLeft_creator="1"
+                            tools:layout_constraintRight_creator="1"
+                            tools:layout_constraintTop_creator="1">
+
+                            <TextView
+                                android:id="@+id/tab2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="#FFFFFF"
+                                android:padding="10dp"
+                                android:text="TAB CONTENT 2" />
+                        </ScrollView >
+
+                    </LinearLayout>
+
+                    <!-- 세 번째 페이지. content3 -->
+                    <LinearLayout
+                        android:id="@+id/content3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="460dp"
+                            android:fillViewport="true"
+                            android:scrollbars="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.582"
+                            tools:layout_constraintBottom_creator="1"
+                            tools:layout_constraintLeft_creator="1"
+                            tools:layout_constraintRight_creator="1"
+                            tools:layout_constraintTop_creator="1">
+                            <TextView
+                                android:id="@+id/tab3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="#FFFFFF"
+                                android:padding="10dp"
+                                android:text="TAB CONTENT 3" />
+                        </ScrollView >
+                    </LinearLayout>
+
+                </FrameLayout>
+            </LinearLayout>
+        </TabHost>
+    </RelativeLayout>
 
     <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/imageButton"
+        android:layout_width="32dp"
+        android:layout_height="24dp"
         android:onClick="show_detail_before_login_back"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintHorizontal_bias="0.01"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023"
+        app:layout_constraintVertical_bias="0.02"
         app:srcCompat="@drawable/abc_vector_test"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
-
+        tools:layout_constraintRight_creator="1" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -46,9 +46,6 @@ public class show_detail extends AppCompatActivity {
     ListViewAdapterDetail adapter;
     String mJsonString;
 
-    private Context mContext;
-    private TabLayout mTabLayout;
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_detail);

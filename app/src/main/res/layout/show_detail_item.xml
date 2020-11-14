@@ -19,9 +19,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_weight="2"
                 android:gravity="center_vertical"
-                android:text="품목명"
+                android:text="품목명      "
                 android:textColor="#000000"
                 android:textSize="20dp" />
 
@@ -29,9 +29,9 @@
                 android:id="@+id/detail_pill_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_weight="2"
                 android:gravity="center_vertical"
-                android:text="약이름 결과"
+                android:text="약이름 결과      "
                 android:textColor="#000000"
                 android:textSize="20dp" />
 
@@ -46,9 +46,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_weight="2"
                 android:gravity="center_vertical"
-                android:text="회사"
+                android:text="회사명      "
                 android:textColor="#000000"
                 android:textSize="20dp" />
 
@@ -56,7 +56,7 @@
                 android:id="@+id/company"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_weight="2"
                 android:gravity="center_vertical"
                 android:text="회사 결과"
                 android:textColor="#000000"
@@ -73,9 +73,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_weight="2"
                 android:gravity="center_vertical"
-                android:text="성분명"
+                android:text="성분              "
                 android:textColor="#000000"
                 android:textSize="20dp" />
 
@@ -83,7 +83,7 @@
                 android:id="@+id/ingredient"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_weight="2"
                 android:gravity="center_vertical"
                 android:text="성분명 결과"
                android:textColor="#000000"
@@ -100,9 +100,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_weight="2"
                 android:gravity="center_vertical"
-                android:text="용법 용량"
+                android:text="용법 용량            "
                 android:textColor="#000000"
                 android:textSize="20dp" />
 
@@ -110,7 +110,7 @@
                 android:id="@+id/volumn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_weight="2"
                 android:gravity="center_vertical"
                 android:text="용법용량 결과"
                 android:textColor="#000000"

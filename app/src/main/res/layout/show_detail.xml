@@ -17,7 +17,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="454dp"
+                android:layout_height="600dp"
                 android:orientation="vertical">
 
                 <!-- TabWidget의 id값이 반드시 "tabs"로 지정되어야 함. -->
@@ -92,9 +92,8 @@
                                 android:id="@+id/tab2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="#009688"
-                                android:gravity="center"
-                                android:padding="8dp"
+                                android:background="#FFFFFF"
+                                android:padding="10dp"
                                 android:text="TAB CONTENT 2" />
                         </ScrollView >
 
@@ -125,9 +124,8 @@
                             android:id="@+id/tab3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="#2196F3"
-                            android:gravity="center"
-                            android:padding="8dp"
+                            android:background="#FFFFFF"
+                            android:padding="10dp"
                             android:text="TAB CONTENT 3" />
                         </ScrollView >
                     </LinearLayout>

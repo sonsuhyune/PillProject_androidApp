@@ -111,6 +111,8 @@ public class search_result extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... unused) {
 
+            mark = "MET";
+
             /* 인풋 파라메터값 생성 */
             String param = "mark="+mark+"";
             System.out.println(param);
