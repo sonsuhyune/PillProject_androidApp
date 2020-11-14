@@ -38,6 +38,7 @@ import java.net.URL;
 
 import static com.example.myapplication.after_login.after_login_mark;
 import static com.example.myapplication.show_detail.pill;
+import static com.example.myapplication.show_detail.pill_img;
 
 
 public class search_result_after_login extends AppCompatActivity {
@@ -116,6 +117,8 @@ public class search_result_after_login extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     pill = adapter.getPillName(position);
+                    pill_img = adapter.getPillImg(position);
+
                     System.out.println(pill);
                     show_detail();
                 }

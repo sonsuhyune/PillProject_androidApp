@@ -8,6 +8,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -67,6 +70,10 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import static com.example.myapplication.login.sId;
 
+import static com.example.myapplication.show_detail.pill;
+import static com.example.myapplication.show_detail.pill_img;
+import static com.example.myapplication.show_detail.pill_comp;
+
 public class add_pill_user extends AppCompatActivity {
 
     CheckBox Mon_rb,Sun_rb,Tue_rb,Wed_rb,Thu_rb, Fri_rb, Sat_rb;
@@ -89,6 +96,7 @@ public class add_pill_user extends AppCompatActivity {
     final static int CAPTURE_IMAGE = 2;  //카메라로찍은 사진선택
     private String mCurrentPhotoPath;
     EditText et_nickname;
+    TextView pill_name_info;
     static String nickname;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +107,7 @@ public class add_pill_user extends AppCompatActivity {
         img_internal_dir = cw.getDir("imgageDir", context.MODE_PRIVATE);
 
         setContentView(R.layout.add_pill_user);
+        pill_name_info = findViewById(R.id.textView6);
         button = findViewById(R.id.button); ////
         mImageView = findViewById(R.id.imageView);
         button.setOnClickListener(new View.OnClickListener(){
@@ -107,6 +116,7 @@ public class add_pill_user extends AppCompatActivity {
                 photoDialogRadio(); //갤러리에서 불러오기 or 사진찍어서 불러오기
             }
         });
+
 
         final TimePicker picker=(TimePicker)findViewById(R.id.timePicker);
         picker.setIs24HourView(true);
@@ -131,6 +141,15 @@ public class add_pill_user extends AppCompatActivity {
 
         int pre_hour = Integer.parseInt(HourFormat.format(currentTime));
         int pre_minute = Integer.parseInt(MinuteFormat.format(currentTime));
+
+        if (pill!=null){
+            pill_name = pill;
+            pill_name_info.setText(pill);
+            mImageView.setImageDrawable(pill_img);
+            img = ((BitmapDrawable)pill_img).getBitmap();
+            TextView comp_textview = (TextView)findViewById(R.id.textView5);
+            comp_textview.setText(pill_comp);
+        }
 
 
         if (Build.VERSION.SDK_INT >= 23 ){
@@ -369,7 +388,7 @@ public class add_pill_user extends AppCompatActivity {
     }
 
     public void after_back(View v) {
-        Intent intent = new Intent(getApplicationContext(), add_pill.class);
+        Intent intent = new Intent(getApplicationContext(), after_login.class);
         startActivity(intent);
         overridePendingTransition(R.transition.anim_slide_a, R.transition.anim_slide_b);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -379,10 +398,8 @@ public class add_pill_user extends AppCompatActivity {
 
     private void saveToInternalStorage(){
         System.out.println("saveToInternalStorage>>");
-        img_file_name = user_id.concat("_").concat(nickname);
-        System.out.println("1");
+        img_file_name = user_id.concat("_").concat(nickname).concat(".jpg");
         File img_file_path = new File(img_internal_dir, img_file_name);
-        System.out.println("2");
 
         FileOutputStream fos = null;
         try {
