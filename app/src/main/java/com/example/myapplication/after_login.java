@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -23,13 +24,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.Socket;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class after_login extends AppCompatActivity implements View.OnClickListener {
+
+    /* 이미지 socket 통신 부분 */
+    private Handler mHandler;
+    private Socket socket;
+    private DataOutputStream dos;
+    private DataInputStream dis;
+    private String ip = "203.255.176.79";
+    private int port = 8088; //pill_img_search_server.py
+    private String img_path;
 
     final String TAG = getClass().getSimpleName();
     ImageView imageView;
@@ -37,10 +52,14 @@ public class after_login extends AppCompatActivity implements View.OnClickListen
     ImageButton cameraBtn2;
     final static int TAKE_PICTURE = 1;
     private Bitmap img; ///
+    private Bitmap rotatedBitmap = null;
     ImageView photoImageView;
 
     String mCurrentPhotoPath;
     static final int REQUEST_TAKE_PHOTO = 1;
+
+    static String after_login_mark = null;
+    private final Charset UTF8_CHARSET = Charset.forName("UTF-8");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +86,75 @@ public class after_login extends AppCompatActivity implements View.OnClickListen
 
         }
     }
+
+    public String readUTF8 (DataInputStream in) throws IOException {
+        int length = in.readInt();
+        byte[] encoded = new byte[length];
+        in.readFully(encoded, 0, length);
+        return new String(encoded, UTF8_CHARSET);
+    }
+
+    void connect(){
+        mHandler = new Handler();
+
+        //Log.w("connect","연결 하는중");
+        Thread checkUpdate = new Thread() {
+            public void run() {
+                ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
+                rotatedBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArray);
+                byte[] bytes = byteArray.toByteArray();
+
+                // 서버 접속
+                try {
+                    socket = new Socket(ip, port);
+                    Log.w("after_login.java 서버 접속됨", "서버 접속됨");
+                } catch (IOException e1) {
+                    Log.w("서버접속못함", "서버접속못함");
+                    e1.printStackTrace();
+                }
+
+                Log.w("edit 넘어가야 할 값 : ","안드로이드에서 서버로 연결요청");
+
+                try {
+                    Log.w("Image Length:", Integer.toString(bytes.length));
+                    dos = new DataOutputStream(socket.getOutputStream());
+                    dis = new DataInputStream(socket.getInputStream());
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.w("버퍼", "버퍼생성 잘못됨");
+                }
+                Log.w("버퍼","버퍼생성 잘됨");
+
+                try{
+                    dos.writeUTF(Integer.toString(bytes.length));
+                    dos.flush();
+
+                    dos.write(bytes);
+                    dos.flush();
+
+                    img_path = readUTF8(dis);
+                    Log.w("img_path", img_path);
+                    after_login_mark = readUTF8(dis);
+                    socket.close();
+
+                }
+                catch (Exception e){
+                    Log.w("error", "error occur");
+                }
+            }
+        };
+        checkUpdate.start();
+        try {
+            checkUpdate.join();
+        }catch (InterruptedException e){
+
+        }
+        System.out.println("Thread terminated");
+    }
+
     public void search_button(View v) {
+        connect();
         Intent intent = new Intent(getApplicationContext(), search_result_after_login.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -131,7 +218,6 @@ public class after_login extends AppCompatActivity implements View.OnClickListen
                             int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
                                     ExifInterface.ORIENTATION_UNDEFINED);
 
-                            Bitmap rotatedBitmap = null;
                             switch (orientation) {
 
                                 case ExifInterface.ORIENTATION_ROTATE_90:

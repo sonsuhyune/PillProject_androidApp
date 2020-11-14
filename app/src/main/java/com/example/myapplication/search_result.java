@@ -121,8 +121,6 @@ public class search_result extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... unused) {
 
-            mark = "MET";
-
             /* 인풋 파라메터값 생성 */
             String param = "mark="+mark+"";
             System.out.println(param);
@@ -253,7 +251,6 @@ public class search_result extends AppCompatActivity {
 
                     for (int i = 0; i < pill_num; i++) {
                         JSONObject item = jsonArray.getJSONObject(i);
-                        Bitmap img_bitmap = null;
                         int data_len = 0;
 
                         String img = item.getString(TAG_IMG);
