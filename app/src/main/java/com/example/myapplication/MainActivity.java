@@ -164,6 +164,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         };
         checkUpdate.start();
+        try {
+            checkUpdate.join();
+        }catch (InterruptedException e){
+
+        }
+        System.out.println("Thread terminated");
     }
 
     public void search_button(View v) {

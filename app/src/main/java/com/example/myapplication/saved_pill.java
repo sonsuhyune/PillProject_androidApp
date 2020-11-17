@@ -47,33 +47,33 @@ public class saved_pill extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.saved_pill);
 
-        TabHost tabHost1 = (TabHost) findViewById(R.id.tabHost1) ;
-        tabHost1.setup() ;
+        TabHost tabHost1 = (TabHost) findViewById(R.id.saved_tabHost1) ;
+        tabHost1.setup();
 
         // 첫 번째 Tab. (탭 표시 텍스트:"TAB 1"), (페이지 뷰:"content1")
         TabHost.TabSpec ts1 = tabHost1.newTabSpec("Tab Spec 1") ;
-        ts1.setContent(R.id.content1) ;
+        ts1.setContent(R.id.saved_content1) ;
         ts1.setIndicator("기본 정보") ;
         tabHost1.addTab(ts1) ;
 
         // 두 번째 Tab. (탭 표시 텍스트:"TAB 2"), (페이지 뷰:"content2")
         TabHost.TabSpec ts2 = tabHost1.newTabSpec("Tab Spec 2") ;
-        ts2.setContent(R.id.content2) ;
+        ts2.setContent(R.id.saved_content2) ;
         ts2.setIndicator("효능 효과") ;
         tabHost1.addTab(ts2) ;
-        TextView tab2 = (TextView)findViewById(R.id.tab2);
+        TextView tab2 = (TextView)findViewById(R.id.saved_tab2);
         tab2.setText("효능 효과"); //여기에다가 정보 입력
 
         // 세 번째 Tab. (탭 표시 텍스트:"TAB 3"), (페이지 뷰:"content3")
         TabHost.TabSpec ts3 = tabHost1.newTabSpec("Tab Spec 3") ;
-        ts3.setContent(R.id.content3) ;
+        ts3.setContent(R.id.saved_content3) ;
         ts3.setIndicator("주의 사항") ;
         tabHost1.addTab(ts3) ;
-        TextView tab3 = (TextView)findViewById(R.id.tab3);
+        TextView tab3 = (TextView)findViewById(R.id.saved_tab3);
         tab3.setText("주의사항"); //여기에다가 정보 입력항
 
         adapter = new  ListViewAdapterDetail();
-        mlistView = (ListView) findViewById(R.id.tab1_listView_before);
+        mlistView = (ListView) findViewById(R.id.saved_tab1_listView);
 
         saved_pill.GetData task = new saved_pill.GetData();
         task.execute();
@@ -198,11 +198,11 @@ public class saved_pill extends AppCompatActivity {
 
                 adapter.addItem(name, company, ingredient, capacity);
 
-                TextView tab2 = (TextView)findViewById(R.id.tab2);
+                TextView tab2 = (TextView)findViewById(R.id.saved_tab2);
                 tab2.setText(efficiency); //여기에다가 정보 입력
 
 
-                TextView tab3 = (TextView)findViewById(R.id.tab3);
+                TextView tab3 = (TextView)findViewById(R.id.saved_tab3);
                 tab3.setText(warning); //여기에다가 정보 입력항
 
             }

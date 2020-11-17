@@ -3,11 +3,13 @@ package com.example.myapplication;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -27,7 +29,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-
 public class show_detail extends AppCompatActivity {
 
     private static String TAG = "show_detail";
@@ -41,6 +42,9 @@ public class show_detail extends AppCompatActivity {
     private static final String TAG_WARNING = "warning";
 
     static String pill = null;
+    static Drawable pill_img = null;
+    static String pill_comp = null;
+
 
     ListView mlistView;
     ListViewAdapterDetail adapter;
@@ -210,6 +214,10 @@ public class show_detail extends AppCompatActivity {
                 TextView tab3 = (TextView)findViewById(R.id.tab3);
                 tab3.setText(warning); //여기에다가 정보 입력항
 
+                if (i==0){
+                    pill_comp = company;
+                }
+
             }
 
             mlistView.setAdapter(adapter);
@@ -234,7 +242,7 @@ public class show_detail extends AppCompatActivity {
     }
 
     public void show_detail_back(View v) {
-        Intent intent = new Intent(getApplicationContext(), search_result.class);
+        Intent intent = new Intent(getApplicationContext(), after_login.class);
         startActivity(intent);
         overridePendingTransition(R.transition.anim_slide_a, R.transition.anim_slide_b);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
