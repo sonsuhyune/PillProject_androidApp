@@ -153,7 +153,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     dos.flush();
 
                     img_path = readUTF8(dis);
-                    //Log.w("img_path", img_path);
                     mark = readUTF8(dis);
                     socket.close();
 
