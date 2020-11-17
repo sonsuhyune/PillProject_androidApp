@@ -113,6 +113,7 @@ public class search_result extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     pill = adapter.getPillName(position);
                     System.out.println(pill);
+
                     show_detail_before_login();
                 }
             });
