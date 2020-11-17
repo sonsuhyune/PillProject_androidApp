@@ -153,7 +153,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     dos.flush();
 
                     img_path = readUTF8(dis);
-                    //Log.w("img_path", img_path);
                     mark = readUTF8(dis);
                     socket.close();
 
@@ -174,6 +173,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void search_button(View v) {
         connect();
+
         Intent intent = new Intent(getApplicationContext(), search_result.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
