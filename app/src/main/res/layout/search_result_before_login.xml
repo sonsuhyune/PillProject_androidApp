@@ -28,11 +28,13 @@
         android:layout_height="wrap_content"
         android:text=" 검색결과 "
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.121"
+        app:layout_constraintVertical_bias="0.359"
         app:srcCompat="@drawable/save"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
@@ -40,15 +42,16 @@
         tools:layout_constraintTop_creator="1" />
 
     <ScrollView
-        android:layout_width="343dp"
-        android:layout_height="460dp"
+        android:id="@+id/scrollView2"
+        android:layout_width="331dp"
+        android:layout_height="543dp"
+        android:layout_marginTop="16dp"
         android:fillViewport="true"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.582"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
@@ -58,9 +61,9 @@
             android:id="@+id/result_listView_before_login"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:choiceMode="multipleChoice"
             android:divider="#ffffff"
-            android:dividerHeight="50dp"
-            android:choiceMode="multipleChoice"/>
+            android:dividerHeight="50dp" />
 
     </ScrollView>
 

@@ -81,7 +81,7 @@ public class add_pill_user extends AppCompatActivity {
     final Context context = this;
     search_result sr = new search_result(); //company이름을 받아오기 위한
     login login_ = new login();  // user id를 받아오기 위한
-    static File img_internal_dir;
+    File img_internal_dir;
     String img_file_name;
     String company;
     String user_id =login_.sId;
@@ -131,7 +131,6 @@ public class add_pill_user extends AppCompatActivity {
 
         Date nextDate = nextNotifyTime.getTime();
         String date_text = new SimpleDateFormat("yyyy년 MM월 dd일 EE요일 a hh시 mm분 ", Locale.getDefault()).format(nextDate);
-        //Toast.makeText(getApplicationContext(),"[처음 실행시] 다음 알람은 " + date_text + "으로 알람이 설정되었습니다!", Toast.LENGTH_SHORT).show();
 
 
         // 이전 설정값으로 TimePicker 초기화
@@ -213,7 +212,6 @@ public class add_pill_user extends AppCompatActivity {
 
                 Date currentDateTime = calendar.getTime();
                 String date_text = new SimpleDateFormat("yyyy년 MM월 dd일 EE요일 a hh시 mm분 ", Locale.getDefault()).format(currentDateTime);
-                Toast.makeText(getApplicationContext(),date_text + "으로 알람이 설정되었습니다!", Toast.LENGTH_SHORT).show();
 
                 //  Preference에 설정한 값 저장
                 SharedPreferences.Editor editor = getSharedPreferences("daily alarm", MODE_PRIVATE).edit();
@@ -276,15 +274,6 @@ public class add_pill_user extends AppCompatActivity {
 
         }
 
-//        else { //Disable Daily Notifications
-//            if (PendingIntent.getBroadcast(this, 0, alarmIntent, 0) != null && alarmManager != null) {
-//                alarmManager.cancel(pendingIntent);
-//                //Toast.makeText(this,"Notifications were disabled",Toast.LENGTH_SHORT).show();
-//            }
-//            pm.setComponentEnabledSetting(receiver,
-//                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-//                    PackageManager.DONT_KILL_APP);
-//        }
         save();
     }
 

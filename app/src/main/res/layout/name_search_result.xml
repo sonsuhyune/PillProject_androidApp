@@ -26,12 +26,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=" 검색결과 "
+        android:textStyle="bold"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.121"
+        app:layout_constraintVertical_bias="0.041"
         app:srcCompat="@drawable/save"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
@@ -39,15 +40,16 @@
         tools:layout_constraintTop_creator="1" />
 
     <ScrollView
-        android:layout_width="343dp"
-        android:layout_height="460dp"
+        android:layout_width="348dp"
+        android:layout_height="519dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
 
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.582"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintVertical_bias="0.333"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
@@ -57,9 +59,9 @@
             android:id="@+id/result_listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:choiceMode="multipleChoice"
             android:divider="#ffffff"
-            android:dividerHeight="50dp"
-            android:choiceMode="multipleChoice"/>
+            android:dividerHeight="50dp" />
 
     </ScrollView>
 

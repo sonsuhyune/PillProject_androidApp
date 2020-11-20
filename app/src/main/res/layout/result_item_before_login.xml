@@ -10,30 +10,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:layout_weight="5">
+        android:layout_weight="5"
+        android:padding="10dp">
 
 
         <ImageView
             android:id="@+id/pill_img"
-            android:layout_width="wrap_content"
+            android:layout_width="70sp"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:layout_margin="10dp"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="30sp"
             android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:orientation="vertical">
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <TextView
                 android:id="@+id/pill_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="pillName"
                 android:textColor="#000000"
-                android:textSize="20dp" />
+                android:textSize="15dp" />
 
 
         </LinearLayout>

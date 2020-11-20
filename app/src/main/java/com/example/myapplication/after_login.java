@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
@@ -14,7 +15,9 @@ import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -50,6 +53,7 @@ public class after_login extends AppCompatActivity implements View.OnClickListen
     ImageView imageView;
     ImageButton cameraBtn;
     ImageButton cameraBtn2;
+    Button buttonEvent;
     final static int TAKE_PICTURE = 1;
     private Bitmap img; ///
     private Bitmap rotatedBitmap = null;
@@ -211,6 +215,22 @@ public class after_login extends AppCompatActivity implements View.OnClickListen
                         InputStream in = getContentResolver().openInputStream(Uri.fromFile(file));
                         img = BitmapFactory.decodeStream(in);
                         setContentView(R.layout.after_camera);////////////
+                        buttonEvent = (Button)findViewById(R.id.searchbutton);
+                        buttonEvent.setOnTouchListener(new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                                    buttonEvent.setBackgroundColor(Color.parseColor("#3EB6A0"));
+                                } else if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                                    buttonEvent.setBackgroundColor(Color.parseColor("#7E56C5"));
+                                    buttonEvent.setText("검색 중");
+                                }
+
+                                return false;
+                            }
+                        });
+
                         photoImageView = findViewById(R.id.imageView); /////
 
                         if (img != null) {
