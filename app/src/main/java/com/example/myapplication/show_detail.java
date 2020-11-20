@@ -242,7 +242,7 @@ public class show_detail extends AppCompatActivity {
     }
 
     public void show_detail_back(View v) {
-        Intent intent = new Intent(getApplicationContext(), after_login.class);
+        Intent intent = new Intent(getApplicationContext(), search_result_after_login.class);
         startActivity(intent);
         overridePendingTransition(R.transition.anim_slide_a, R.transition.anim_slide_b);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

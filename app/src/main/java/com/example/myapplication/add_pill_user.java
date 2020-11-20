@@ -388,12 +388,11 @@ public class add_pill_user extends AppCompatActivity {
     }
 
     public void after_back(View v) {
-        Intent intent = new Intent(getApplicationContext(), after_login.class);
+        Intent intent = new Intent(getApplicationContext(), show_detail.class);
         startActivity(intent);
         overridePendingTransition(R.transition.anim_slide_a, R.transition.anim_slide_b);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Toast.makeText(getApplicationContext()," 뒤로가기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
     }
 
     private void saveToInternalStorage(){

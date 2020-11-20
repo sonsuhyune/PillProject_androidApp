@@ -326,7 +326,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void camera_click(View v) {
 
-        Toast.makeText(getApplicationContext(),"사진으로 검색이 눌렸습니다.", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getApplicationContext(),"사진으로 검색이 눌렸습니다.", Toast.LENGTH_SHORT).show();
     }
     public void login_click(View v) {
         Intent intent = new Intent(getApplicationContext(), login.class);
@@ -334,7 +334,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         overridePendingTransition(R.transition.anim_slide_in_left, R.transition.anim_slide_out_right);
-        Toast.makeText(getApplicationContext(),"로그인하기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),"로그인하기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
     }
 
 

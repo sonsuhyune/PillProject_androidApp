@@ -93,7 +93,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="#FFFFFF"
-                                android:padding="10dp"
+                                android:textColor="#000000"
+                                android:textSize="18dp"
+                                android:paddingTop="10pt"
                                 android:text="TAB CONTENT 2" />
                         </ScrollView >
 
@@ -125,7 +127,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="#FFFFFF"
-                            android:padding="10dp"
+                            android:textColor="#000000"
+                            android:textSize="18dp"
+                            android:paddingTop="10pt"
                             android:text="TAB CONTENT 3" />
                         </ScrollView >
                     </LinearLayout>

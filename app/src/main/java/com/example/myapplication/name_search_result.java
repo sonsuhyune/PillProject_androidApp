@@ -39,6 +39,7 @@ import java.net.URL;
 
 import static com.example.myapplication.name_search.user_query;
 import static com.example.myapplication.show_detail.pill;
+import static com.example.myapplication.show_detail.pill_img;
 
 public class name_search_result extends AppCompatActivity {
 
@@ -112,6 +113,7 @@ public class name_search_result extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     pill = adapter.getPillName(position);
+                    pill_img = adapter.getPillImg(position);
                     System.out.println(pill);
                     show_detail();
                 }
@@ -311,7 +313,7 @@ public class name_search_result extends AppCompatActivity {
         overridePendingTransition(R.transition.anim_slide_a, R.transition.anim_slide_b);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Toast.makeText(getApplicationContext()," 뒤로가기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext()," 뒤로가기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
     }
     public void show_detail (){
         Intent intent = new Intent(getApplicationContext(), show_detail.class);
@@ -320,7 +322,7 @@ public class name_search_result extends AppCompatActivity {
         startActivity(intent);
         overridePendingTransition(R.transition.anim_slide_in_left, R.transition.anim_slide_out_right);
 
-        Toast.makeText(getApplicationContext()," 자세히 보기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext()," 자세히 보기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
 
     }
 

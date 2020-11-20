@@ -297,7 +297,7 @@ public class after_login extends AppCompatActivity implements View.OnClickListen
         overridePendingTransition(R.transition.anim_slide_a, R.transition.anim_slide_b);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Toast.makeText(getApplicationContext()," durlrudlruld가 눌렸습니다.", Toast.LENGTH_SHORT).show();
+
     }
 
     public void name_search_button(View v) {
@@ -307,7 +307,7 @@ public class after_login extends AppCompatActivity implements View.OnClickListen
         startActivity(intent);
         overridePendingTransition(R.transition.anim_slide_in_left, R.transition.anim_slide_out_right);
 
-        Toast.makeText(getApplicationContext()," 이름으로 검색 하기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext()," 이름으로 검색 하기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
     }
     public void show_pill_button(View v) {
         Intent intent = new Intent(getApplicationContext(), show_pill.class);
@@ -316,7 +316,7 @@ public class after_login extends AppCompatActivity implements View.OnClickListen
         startActivity(intent);
         overridePendingTransition(R.transition.anim_slide_in_left, R.transition.anim_slide_out_right);
 
-        Toast.makeText(getApplicationContext()," 이름으로 검색 하기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext()," 이름으로 검색 하기가 눌렸습니다.", Toast.LENGTH_SHORT).show();
     }
     public void add_pill(View v) {
         Intent intent = new Intent(getApplicationContext(), add_pill_user.class);
@@ -325,6 +325,6 @@ public class after_login extends AppCompatActivity implements View.OnClickListen
         startActivity(intent);
         overridePendingTransition(R.transition.anim_slide_in_left, R.transition.anim_slide_out_right);
 
-        Toast.makeText(getApplicationContext()," 내 알약 등록이 눌렸습니다.", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext()," 내 알약 등록이 눌렸습니다.", Toast.LENGTH_SHORT).show();
     }
 }
