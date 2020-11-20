@@ -38,6 +38,7 @@ import java.net.Socket;
 import java.net.URL;
 
 import static com.example.myapplication.MainActivity.mark;
+import static com.example.myapplication.MainActivity.shape;
 import static com.example.myapplication.show_detail.pill;
 
 public class search_result extends AppCompatActivity {
@@ -122,8 +123,21 @@ public class search_result extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... unused) {
 
+            if(shape.equals("oval")){
+                shape = "타원형";
+            }
+            else if (shape.equals("circle")){
+                shape ="원형";
+            }
+            else if (shape.equals("hexagon")){
+                shape = "팔각형";
+            }
+            else if(shape.equals("octagon")){
+                shape = "육각형";
+            }
+
             /* 인풋 파라메터값 생성 */
-            String param = "mark="+mark+"";
+            String param = "mark="+mark+""+ "&shape=" + shape + "";;
             System.out.println(param);
             Log.e("POST",param);
 

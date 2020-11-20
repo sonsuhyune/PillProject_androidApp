@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String mImage;
 
     static String mark = null;
+    static String shape = null;
     private final Charset UTF8_CHARSET = Charset.forName("UTF-8");
 
 
@@ -154,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     img_path = readUTF8(dis);
                     mark = readUTF8(dis);
+                    shape = readUTF8(dis);
                     socket.close();
 
                 }
