@@ -135,6 +135,20 @@ public class search_result extends AppCompatActivity {
             else if(shape.equals("octagon")){
                 shape = "육각형";
             }
+            String[] marks = mark.split(",");
+            System.out.println(marks.length);
+            if(marks.length >= 2){
+                //System.out.println(marks[0].length());
+                //System.out.println(marks[1].length());
+                int one = marks[0].length();
+                int two = marks[1].length();
+                mark = marks[0].substring(1,one-1)+"|"+marks[1].substring(2,two-1);
+                //System.out.println(mark);
+            }
+            else if(marks.length == 1){
+                int one = marks[0].length();
+                mark = marks[0].substring(1,one-1);
+            }
 
             /* 인풋 파라메터값 생성 */
             String param = "mark="+mark+""+ "&shape=" + shape + "";;
