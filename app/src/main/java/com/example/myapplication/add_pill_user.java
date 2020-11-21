@@ -119,7 +119,7 @@ public class add_pill_user extends AppCompatActivity {
 
 
         final TimePicker picker=(TimePicker)findViewById(R.id.timePicker);
-        picker.setIs24HourView(true);
+        picker.setIs24HourView(false);
         et_nickname = (EditText) findViewById(R.id.nick);
         // 앞서 설정한 값으로 보여주기
         // 없으면 디폴트 값은 현재시간
@@ -142,7 +142,7 @@ public class add_pill_user extends AppCompatActivity {
         int pre_minute = Integer.parseInt(MinuteFormat.format(currentTime));
 
 
-
+        //System.out.println("SDK_INT!!: "+ Build.VERSION.SDK_INT);
 
         if (Build.VERSION.SDK_INT >= 23 ){
             picker.setHour(pre_hour);
