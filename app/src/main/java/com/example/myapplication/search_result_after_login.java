@@ -36,6 +36,8 @@ import java.net.HttpURLConnection;
 import java.net.Socket;
 import java.net.URL;
 
+
+import static com.example.myapplication.after_login.after_login_shape;
 import static com.example.myapplication.after_login.after_login_mark;
 import static com.example.myapplication.show_detail.pill;
 import static com.example.myapplication.show_detail.pill_img;
@@ -127,9 +129,34 @@ public class search_result_after_login extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Void... unused) {
-
+            if(after_login_shape.equals("oval")){
+                after_login_shape = "타원형";
+            }
+            else if (after_login_shape.equals("circle")){
+                after_login_shape ="원형";
+            }
+            else if (after_login_shape.equals("hexagon")){
+                after_login_shape = "팔각형";
+            }
+            else if(after_login_shape.equals("octagon")){
+                after_login_shape = "육각형";
+            }
+            String[] marks = after_login_mark.split(",");
+            System.out.println(marks.length);
+            if(marks.length >= 2){
+                //System.out.println(marks[0].length());
+                //System.out.println(marks[1].length());
+                int one = marks[0].length();
+                int two = marks[1].length();
+                after_login_mark = marks[0].substring(1,one-1)+"|"+marks[1].substring(2,two-1);
+                //System.out.println(mark);
+            }
+            else if(marks.length == 1){
+                int one = marks[0].length();
+                after_login_mark = marks[0].substring(1,one-1);
+            }
             /* 인풋 파라메터값 생성 */
-            String param = "mark="+after_login_mark+"";
+            String param = "mark="+after_login_mark+ "&shape=" + after_login_shape + "";;
             System.out.println(param);
             Log.e("POST",param);
 

@@ -63,6 +63,7 @@ public class after_login extends AppCompatActivity implements View.OnClickListen
     static final int REQUEST_TAKE_PHOTO = 1;
 
     static String after_login_mark = null;
+    static String after_login_shape = null;
     private final Charset UTF8_CHARSET = Charset.forName("UTF-8");
 
     @Override
@@ -140,6 +141,7 @@ public class after_login extends AppCompatActivity implements View.OnClickListen
                     img_path = readUTF8(dis);
                     Log.w("img_path", img_path);
                     after_login_mark = readUTF8(dis);
+                    after_login_shape = readUTF8(dis);
                     socket.close();
 
                 }
