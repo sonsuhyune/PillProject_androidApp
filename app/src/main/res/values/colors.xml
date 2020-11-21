@@ -3,4 +3,5 @@
     <color name="colorPrimary">#E9EAEC</color>
     <color name="colorPrimaryDark">#9D9EA1</color>
     <color name="colorAccent">#5D5D5E</color>
+    <color name="timepicker_header">#111112</color>
 </resources>

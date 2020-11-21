@@ -141,14 +141,7 @@ public class add_pill_user extends AppCompatActivity {
         int pre_hour = Integer.parseInt(HourFormat.format(currentTime));
         int pre_minute = Integer.parseInt(MinuteFormat.format(currentTime));
 
-        if (pill!=null){
-            pill_name = pill;
-            pill_name_info.setText(pill);
-            mImageView.setImageDrawable(pill_img);
-            img = ((BitmapDrawable)pill_img).getBitmap();
-            TextView comp_textview = (TextView)findViewById(R.id.textView5);
-            comp_textview.setText(pill_comp);
-        }
+
 
 
         if (Build.VERSION.SDK_INT >= 23 ){
@@ -223,6 +216,14 @@ public class add_pill_user extends AppCompatActivity {
             }
 
         });
+        if (pill!=null){
+            pill_name = pill;
+            pill_name_info.setText(pill);
+            mImageView.setImageDrawable(pill_img);
+            img = ((BitmapDrawable)pill_img).getBitmap();
+            TextView comp_textview = (TextView)findViewById(R.id.textView5);
+            comp_textview.setText(pill_comp);
+        }
 
 
 
