@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.app.ProgressDialog;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,7 +37,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static com.example.myapplication.add_pill_user.img_internal_dir;
 import static com.example.myapplication.login.sId;
 import static com.example.myapplication.saved_pill.saved_pill;
 
@@ -49,9 +50,11 @@ public class show_pill extends AppCompatActivity {
     private static final String TAG_NICKNAME ="pill_nickname";
 
 
+    File img_internal_dir;
     ListView mlistView;
     ListViewAdapter adapter;
     String mJsonString;
+    TextView my_pill_textview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,10 @@ public class show_pill extends AppCompatActivity {
 
         adapter = new ListViewAdapter() ;
         mlistView = (ListView) findViewById(R.id.listview1);
+        my_pill_textview = (TextView) findViewById(R.id.my_pill_text);
+
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        img_internal_dir = cw.getDir("imgageDir", this.MODE_PRIVATE);
 
         //adapter.addItem(ContextCompat.getDrawable(this, R.drawable.camera2), "부르펜", "해열제");
 
@@ -190,6 +197,8 @@ public class show_pill extends AppCompatActivity {
         try {
             JSONObject jsonObject = new JSONObject(mJsonString);
             JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
+
+            if (jsonArray.length() == 0) my_pill_textview.setText("복용 중인 알약이 없습니다");
 
             for(int i=0;i<jsonArray.length();i++){
 

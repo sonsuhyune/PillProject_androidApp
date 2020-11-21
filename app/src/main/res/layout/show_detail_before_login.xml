@@ -139,19 +139,20 @@
         </TabHost>
     </RelativeLayout>
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="32dp"
-        android:layout_height="24dp"
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="121dp"
+        android:layout_height="45dp"
+        android:background="@drawable/border"
         android:onClick="show_detail_before_login_back"
+        android:text="뒤로가기"
+        android:textColor="#FBFBFB"
+        android:textSize="17dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.01"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.02"
-        app:srcCompat="@drawable/abc_vector_test"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1" />
+        app:layout_constraintVertical_bias="0.94"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

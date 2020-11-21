@@ -127,22 +127,11 @@ public class login  extends AppCompatActivity {
             AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
             if(data.equals("1"))
             {
-                Log.e("RESULT","성공적으로 처리되었습니다!");
-                alertBuilder
-                        //.setTitle("알림")
-                        .setMessage(sId+"님 환영합니다!")
-                        .setCancelable(true)
-                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(getApplicationContext(), after_login.class);
-                                startActivity(intent);
-                                overridePendingTransition(R.transition.anim_slide_in_left, R.transition.anim_slide_out_right);
-                                finish();
-                            }
-                        });
-                AlertDialog dialog = alertBuilder.create();
-                dialog.show();
+                Intent intent = new Intent(getApplicationContext(), after_login.class);
+                startActivity(intent);
+                overridePendingTransition(R.transition.anim_slide_in_left, R.transition.anim_slide_out_right);
+                finish();
+
             }
             else if(data.equals("0")||data.equals("Can not find ID"))
             {

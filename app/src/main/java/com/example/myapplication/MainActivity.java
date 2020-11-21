@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
@@ -21,6 +22,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewDebug;
 import android.widget.Button;
@@ -61,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageView imageView;
     ImageButton cameraBtn;
     TextView result_text;
+    Button buttonEvent;
     final static int TAKE_PICTURE = 1;
     static int check_flag = 1;
     String mCurrentPhotoPath;
@@ -241,6 +244,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         InputStream in = getContentResolver().openInputStream(Uri.fromFile(file));
                         img = BitmapFactory.decodeStream(in);
                         setContentView(R.layout.after_camera);////////////
+                        buttonEvent = (Button)findViewById(R.id.searchbutton);
+                        buttonEvent.setOnTouchListener(new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                                    buttonEvent.setBackgroundColor(Color.parseColor("#3EB6A0"));
+                                } else if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                                    buttonEvent.setBackgroundColor(Color.parseColor("#7E56C5"));
+                                    buttonEvent.setText("검색 중");
+                                }
+
+                                return false;
+                            }
+                        });
+
                         photoImageView = findViewById(R.id.imageView); /////
 
                         if (img != null) {
