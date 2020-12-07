@@ -333,6 +333,9 @@ public class search_result_after_login extends AppCompatActivity {
             System.out.println("adapter show pill");
         }
         mlistView.setAdapter(adapter);
+        if (pill_num_after == 0){
+            Toast.makeText(getApplicationContext()," 식별마크를 인식하지 못했습니다", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void after_back(View v) {

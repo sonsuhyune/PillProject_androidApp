@@ -157,6 +157,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     img_path = readUTF8(dis);
                     mark = readUTF8(dis);
                     shape = readUTF8(dis);
+                    System.out.println(img_path);
+                    System.out.println(mark);
+                    System.out.println(shape);
                     socket.close();
 
                 }

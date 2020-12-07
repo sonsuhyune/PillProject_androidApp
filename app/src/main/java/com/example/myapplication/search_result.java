@@ -75,8 +75,6 @@ public class search_result extends AppCompatActivity {
         adapter = new  ListViewAdapterResult();
         mlistView = (ListView) findViewById(R.id.result_listView_before_login);
 
-        //adapter.addItem(ContextCompat.getDrawable(this, R.drawable.camera2), "부르펜");
-
 
         GetData task = new GetData();
         task.execute();
@@ -328,7 +326,9 @@ public class search_result extends AppCompatActivity {
             adapter.addItem(img_drawable, name_list[i]);
         }
         mlistView.setAdapter(adapter);
-
+        if (pill_num == 0){
+            Toast.makeText(getApplicationContext()," 식별마크를 인식하지 못했습니다", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void search_result_back(View v) {

@@ -218,7 +218,7 @@ public class show_detail_before_login extends AppCompatActivity {
     }
 
     public void show_detail_before_login_back(View v) {
-        Intent intent = new Intent(getApplicationContext(), search_result.class);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
         overridePendingTransition(R.transition.anim_slide_a, R.transition.anim_slide_b);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
