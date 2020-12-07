@@ -304,7 +304,9 @@ public class name_search_result extends AppCompatActivity {
             adapter.addItem(img_drawable, name_list[i]);
         }
         mlistView.setAdapter(adapter);
-
+        if (pill_num == 0){
+            Toast.makeText(getApplicationContext()," 검색 결과가 없습니다", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void after_back(View v) {

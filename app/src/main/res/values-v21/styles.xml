@@ -6,6 +6,7 @@
         <item name="android:numbersBackgroundColor">@color/timepicker_header</item>
         <item name="android:numbersSelectorColor">#88000000</item>
         <item name="android:headerBackground">@color/timepicker_header</item>
+        <item name="android:typeface">sans</item>
     </style>
 
 
